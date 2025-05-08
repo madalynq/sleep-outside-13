@@ -6,8 +6,8 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --emptyOutDir",
-    "lint": "eslint *.js src/**/*.js",
-    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,ts,css}\"",
+    "lint": "eslint *.js src/**/*.js && eslint *.js src/**/*.mjs",
+    "format": "prettier --ignore-path ./.gitignore --write \"./**/*.{html,json,js,mjs,ts,css}\"",
     "test": "jest"
   },
   "author": "Shane Thompson",
