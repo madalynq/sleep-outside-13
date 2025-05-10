@@ -1,3 +1,8 @@
+/**
+ * @description retrieves JSON from given fetch response; throws error if request failed
+ * @param {Object} res - response from Fetch request
+ * @returns {JSON}
+ */
 function convertToJson(res) {
   if (res.ok) {
     return res.json();

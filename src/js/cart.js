@@ -1,11 +1,19 @@
 import { getLocalStorage } from './utils.mjs';
 
+/**
+ * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevent HTML
+ */
 function renderCartContents() {
   const cartItems = getLocalStorage('so-cart') || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector('.product-list').innerHTML = htmlItems.join('');
 }
 
+/**
+ * @param {Object} item - cart item to build HTML for
+ * @returns {String} string representation of relevent HTML
+ * @description item object requires the following keys: Image(String), Name(String), Colors(Array).ColorName(String), FinalPrice(Number)
+ */
 function cartItemTemplate(item) {
   const newItem = `<li class='cart-card divider'>
   <a href='#' class='cart-card__image'>

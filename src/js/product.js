@@ -3,12 +3,20 @@ import ProductData from './ProductData.mjs';
 
 const dataSource = new ProductData('tents');
 
+/**
+ * 
+ * @param {*} product - 
+ */
 function addProductToCart(product) {
     const cart = getLocalStorage('so-cart') || [];
     cart.push(product);
   setLocalStorage('so-cart', cart);
 }
-// add to cart button event handler
+
+/**
+ * @description add to cart button event handler
+ * @param {Event} e - click event
+ */
 async function addToCartHandler(e) {
   const product = await dataSource.findProductById(e.target.dataset.id);
   addProductToCart(product);
