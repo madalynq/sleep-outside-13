@@ -4,8 +4,7 @@ import ProductData from './ProductData.mjs';
 const dataSource = new ProductData('tents');
 
 /**
- * 
- * @param {*} product - 
+ * @param {JSON} product - JSON data of product to add
  */
 function addProductToCart(product) {
     const cart = getLocalStorage('so-cart') || [];
