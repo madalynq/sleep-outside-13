@@ -1,7 +1,7 @@
 /**
  * @description retrieves JSON from given fetch response; throws error if request failed
- * @param {Object} res - response from Fetch request
- * @returns {JSON}
+ * @param {Response} res - response from Fetch request
+ * @returns {JSON} parsed JSON from response
  */
 function convertToJson(res) {
   if (res.ok) {
@@ -21,7 +21,7 @@ export default class ProductData {
   }
 
   /**
-   * @returns {Array} list of products from path
+   * @returns {Array} list of products sourced from `this.path`
    */
   getData() {
     return fetch(this.path)
@@ -31,7 +31,7 @@ export default class ProductData {
 
   /**
    * @param {String} id - ID of product to return
-   * @returns {Object} requested product data
+   * @returns {Object} found product data with given ID
    */
   async findProductById(id) {
     const products = await this.getData();

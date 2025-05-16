@@ -12,7 +12,11 @@ function renderCartContents() {
 /**
  * @param {Object} item - cart item to build HTML for
  * @returns {String} string representation of relevent HTML
- * @description item object requires the following keys: Image(String), Name(String), Colors(Array).ColorName(String), FinalPrice(Number)
+ * @description `item` object requires the following keys: 
+ * - Image(String), 
+ * - Name(String), 
+ * - Colors(Array[Object])[0].ColorName(String), 
+ * - FinalPrice(Number)
  */
 function cartItemTemplate(item) {
   const newItem = `<li class='cart-card divider'>

@@ -19,7 +19,7 @@ export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 // or a more concise version if you are into that sort of thing:
-// export const getLocalStorage = (key) => JSON.parse(localStorage.getItem(key));
+// export const getLocalStorage = key => JSON.parse(localStorage.getItem(key));
 
 /**
  * @description save data to local storage
@@ -44,3 +44,15 @@ export function setClick(selector, callback) {
   });
   qs(selector).addEventListener('click', callback);
 }
+
+/**
+ * @param {String} param - URL query string to retrive data from
+ * @returns {String|Null} contents of requested URL query string. Null if query is not found
+ */
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+}
+// or a more concise version if you are into that sort of thing:
+// export const getParam = param => new URLSearchParams(window.location.search).get(param);
