@@ -1,4 +1,4 @@
-import { renderListWithTemplate as renderListWithTemplate } from './utils.mjs';
+import { renderListWithTemplate } from './utils.mjs';
 
 const productCardTemplate = ({
   Id,
