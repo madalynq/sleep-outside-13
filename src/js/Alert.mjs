@@ -1,4 +1,5 @@
 import { renderListWithTemplate } from './utils.mjs';
+
 const alertTemplate = ({ message, background, color }) =>
   `<p style="${background ? `background: ${background};` : ''}${color ? `color: ${color};` : ''}">${message}<button onClick="this.parentElement.remove()">X</button></p>`;
 
@@ -13,18 +14,14 @@ export default class Alert {
     // early exit if there are no alerts
     if (this.alerts.length < 1) return;
 
-    const alertsBox = document.createElement('section');
-    alertsBox.classList.add('alert-list');
-    document.querySelector('main').prepend(alertsBox);
+    this.buildBox();
+    renderListWithTemplate(alertTemplate, this.alertsBox, this.alerts);
+  }
 
-    // note: will need changed if a different implementation is used for `renderListWithTemplate`
-    renderListWithTemplate(
-      alertsBox,
-      this.alerts,
-      alertTemplate,
-      undefined,
-      false,
-    );
+  buildBox() {
+    this.alertsBox = document.createElement('section');
+    this.alertsBox.classList.add('alert-list');
+    document.querySelector('main').prepend(this.alertsBox);
   }
 
   async getAlerts() {
