@@ -56,3 +56,18 @@ export function getParam(param) {
 }
 // or a more concise version if you are into that sort of thing:
 // export const getParam = param => new URLSearchParams(window.location.search).get(param);
+
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position,
+  clear = false,
+) {
+  if (clear) {
+    parentElement.innerHTML = '';
+  }
+
+  const htmlStrings = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+}

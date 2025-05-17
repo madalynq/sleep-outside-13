@@ -4,9 +4,14 @@ import { getLocalStorage } from './utils.mjs';
  * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevent HTML
  */
 function renderCartContents() {
-  const cartItems = getLocalStorage('so-cart') || [];
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector('.product-list').innerHTML = htmlItems.join('');
+  const cartItems = getLocalStorage('so-cart');
+  if (cartItems !== null) {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector('.product-list').innerHTML = htmlItems.join('');
+  } else {
+    document.querySelector('.product-list').innerHTML =
+      `<h3>Your Cart is Empty</h3>`;
+  }
 }
 
 /**
