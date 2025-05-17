@@ -9,29 +9,29 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-    /**
-     * @param {String} category - path fragment for JSON file
-     */
-    constructor(category) {
-        this.category = category;
-        this.path = `../json/${this.category}.json`;
-    }
+  /**
+   * @param {String} category - path fragment for JSON file
+   */
+  constructor(category) {
+    this.category = category;
+    this.path = `../json/${this.category}.json`;
+  }
 
-    /**
-     * @returns {Array} list of products sourced from `this.path`
-     */
-    getData() {
-        return fetch(this.path)
-            .then(convertToJson)
-            .then((data) => data);
-    }
+  /**
+   * @returns {Array} list of products sourced from `this.path`
+   */
+  getData() {
+    return fetch(this.path)
+      .then(convertToJson)
+      .then((data) => data);
+  }
 
-    /**
-     * @param {String} id - ID of product to return
-     * @returns {Object} found product data with given ID
-     */
-    async findProductById(id) {
-        const products = await this.getData();
-        return products.find((item) => item.Id === id);
-    }
+  /**
+   * @param {String} id - ID of product to return
+   * @returns {Object} found product data with given ID
+   */
+  async findProductById(id) {
+    const products = await this.getData();
+    return products.find((item) => item.Id === id);
+  }
 }

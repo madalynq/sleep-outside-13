@@ -5,7 +5,7 @@
  * @returns {Element} found HTML element
  */
 export function qs(selector, parent = document) {
-    return parent.querySelector(selector);
+  return parent.querySelector(selector);
 }
 // or a more concise version if you are into that sort of thing:
 // export const qs = (selector, parent = document) => parent.querySelector(selector);
@@ -16,7 +16,7 @@ export function qs(selector, parent = document) {
  * @returns parsed item from localStorage
  */
 export function getLocalStorage(key) {
-    return JSON.parse(localStorage.getItem(key));
+  return JSON.parse(localStorage.getItem(key));
 }
 // or a more concise version if you are into that sort of thing:
 // export const getLocalStorage = key => JSON.parse(localStorage.getItem(key));
@@ -27,7 +27,7 @@ export function getLocalStorage(key) {
  * @param {*} data - item to stringify and set
  */
 export function setLocalStorage(key, data) {
-    localStorage.setItem(key, JSON.stringify(data));
+  localStorage.setItem(key, JSON.stringify(data));
 }
 // or a more concise version if you are into that sort of thing:
 // export const setLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
@@ -38,11 +38,11 @@ export function setLocalStorage(key, data) {
  * @param {Function} callback - function to call on clicks
  */
 export function setClick(selector, callback) {
-    qs(selector).addEventListener('touchend', (event) => {
-        event.preventDefault();
-        callback();
-    });
-    qs(selector).addEventListener('click', callback);
+  qs(selector).addEventListener('touchend', (event) => {
+    event.preventDefault();
+    callback();
+  });
+  qs(selector).addEventListener('click', callback);
 }
 
 /**
@@ -50,9 +50,9 @@ export function setClick(selector, callback) {
  * @returns {String|Null} contents of requested URL query string. Null if query is not found
  */
 export function getParam(param) {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    return urlParams.get(param);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
 }
 // or a more concise version if you are into that sort of thing:
 // export const getParam = param => new URLSearchParams(window.location.search).get(param);
@@ -64,10 +64,16 @@ export function getParam(param) {
  * @param {'beforebegin'|'afterbegin'|'beforeend'|'afterend'} position - where to place list HTML. See https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#parameters for details
  * @param {Boolean} clear - whether to remove existing HTML from parent element. true: remove; false: keep
  */
-export function renderListWithTemplate(templateFn, parentElement, list, position = 'afterbegin', clear = false,) {
-    if (clear) parentElement.innerHTML = '';
-    const htmlStrings = list.map(templateFn);
-    parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = 'afterbegin',
+  clear = false,
+) {
+  if (clear) parentElement.innerHTML = '';
+  const htmlStrings = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
 // or a more "concise" version if you are into that sort of thing:
 // export const renderListWithTemplate = (templateFn, parentElement, list, position = 'afterbegin', clear = false) => ((clear ? parentElement.innerHTML = '' : void 0), parentElement.insertAdjacentHTML(position, list.map(templateFn).join('')));
