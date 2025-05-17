@@ -18,13 +18,24 @@ const productCardTemplate = ({
 </li>`;
 
 export default class ProductList {
-  constructor(category, dataSource, listEl) {
+  constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
-    this.listEl = listEl;
+    this.listElement = listElement;
   }
+
   async init() {
-    this.products = await this.dataSource.getData();
-    renderListWithTemplate(this.listEl, this.products, productCardTemplate);
+    const list = await this.dataSource.getData();
+    this.renderList(list);
+  }
+
+  renderList(list) {
+    renderListWithTemplate(
+      productCardTemplate,
+      this.listElement,
+      list,
+      'afterbegin',
+      true,
+    );
   }
 }
