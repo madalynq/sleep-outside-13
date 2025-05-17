@@ -4,14 +4,13 @@ import { getLocalStorage } from './utils.mjs';
  * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevent HTML
  */
 function renderCartContents() {
-  const cartItems = getLocalStorage('so-cart');
-  if (cartItems !== null) {
-    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-    document.querySelector('.product-list').innerHTML = htmlItems.join('');
-  } else {
-    document.querySelector('.product-list').innerHTML =
-      `<h3>Your Cart is Empty</h3>`;
-  }
+    const cartItems = getLocalStorage('so-cart');
+    if (cartItems !== null) {
+        const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+        document.querySelector('.product-list').innerHTML = htmlItems.join('');
+    }
+    else document.querySelector('.product-list').innerHTML = `<h3>Your Cart is Empty</h3>`;
+
 }
 
 /**
@@ -24,7 +23,7 @@ function renderCartContents() {
  * - FinalPrice(Number)
  */
 function cartItemTemplate(item) {
-  const newItem = `<li class='cart-card divider'>
+    const newItem = `<li class='cart-card divider'>
   <a href='#' class='cart-card__image'>
     <img
       src='${item.Image}'
@@ -39,7 +38,7 @@ function cartItemTemplate(item) {
   <p class='cart-card__price'>$${item.FinalPrice}</p>
 </li>`;
 
-  return newItem;
+    return newItem;
 }
 
 renderCartContents();

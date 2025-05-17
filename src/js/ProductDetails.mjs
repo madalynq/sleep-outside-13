@@ -5,31 +5,40 @@ export default class ProductDetails {
      * @param {String} productId - ID for given product
      * @param {DataSource} dataSource - DataSource of given product
      */
-  constructor(productId, dataSource) {
-    this.productId = productId;
-    this.product = {};
-    this.dataSource = dataSource;
-  }
+    constructor(productId, dataSource) {
+        this.productId = productId;
+        this.product = {};
+        this.dataSource = dataSource;
+    }
 
-  async init() {
-    this.product = await this.dataSource.findProductById(this.productId);
+    /**
+     * @description retrieves requested product from dataSource, then renders the relevant HTML
+     */
+    async init() {
+        this.product = await this.dataSource.findProductById(this.productId);
 
-    this.renderProductDetails();
+        this.renderProductDetails();
 
-    document
-      .getElementById('addToCart')
-      .addEventListener('click', this.addToCart.bind(this));
-  }
+        document
+            .getElementById('addToCart')
+            .addEventListener('click', this.addToCart.bind(this));
+    }
 
-  addToCart() {
-    const cartItems = getLocalStorage('so-cart') || [];
-    cartItems.push(this.product);
-    setLocalStorage('so-cart', cartItems);
-  }
+    /**
+     * @description retrieves cart from localStorage, adds relevant product to it, then returns it to localStorage
+     */
+    addToCart() {
+        const cartItems = getLocalStorage('so-cart') || [];
+        cartItems.push(this.product);
+        setLocalStorage('so-cart', cartItems);
+    }
 
-  renderProductDetails() {
-    productDetailsTemplate(this.product);
-  }
+    /**
+     * @description calls productDetailsTemplate with stored product
+     */
+    renderProductDetails() {
+        productDetailsTemplate(this.product);
+    }
 }
 
 /**
@@ -43,15 +52,15 @@ export default class ProductDetails {
  * - DescriptionHtmlSimple(String)
  */
 function productDetailsTemplate(product) {
-  document.querySelector('h2').textContent = product.Brand.Name;
-  document.querySelector('h3').textContent = product.NameWithoutBrand;
+    document.querySelector('h2').textContent = product.Brand.Name;
+    document.querySelector('h3').textContent = product.NameWithoutBrand;
 
-  const productImage = document.getElementById('productImage');
-  productImage.src = product.Image;
-  productImage.alt = product.NameWithoutBrand;
+    const productImage = document.getElementById('productImage');
+    productImage.src = product.Image;
+    productImage.alt = product.NameWithoutBrand;
 
-  document.getElementById('productPrice').textContent = product.FinalPrice;
-  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
-  document.getElementById('addToCart').dataset.id = product.Id;
+    document.getElementById('productPrice').textContent = product.FinalPrice;
+    document.getElementById('productColor').textContent = product.Colors[0].ColorName;
+    document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
+    document.getElementById('addToCart').dataset.id = product.Id;
 }
