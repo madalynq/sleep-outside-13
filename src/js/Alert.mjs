@@ -78,7 +78,7 @@ export default class Alert {
   }
 
   /**
-   * @param {Promise<Response>} data - Fetch response object to retieve JSON from
+   * @param {Promise<Response>} data - Fetch response object to retrieve JSON from
    * @returns {Array} parsed array from data. Empty array if invalid
    * @description returns different results based on provided data:
    * - parsed & is array => array of data

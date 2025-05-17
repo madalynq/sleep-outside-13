@@ -39,7 +39,7 @@ export default class ProductList {
   }
 
   /**
-   * @description retireves products to render as a list from the dataSource, then calls this.renderList
+   * @description retrieves products to render as a list from the dataSource, then calls this.renderList
    */
   async init() {
     const list = await this.dataSource.getData();

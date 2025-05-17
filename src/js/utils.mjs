@@ -46,7 +46,7 @@ export function setClick(selector, callback) {
 }
 
 /**
- * @param {String} param - URL query string to retrive data from
+ * @param {String} param - URL query string to retrieve data from
  * @returns {String|Null} contents of requested URL query string. Null if query is not found
  */
 export function getParam(param) {

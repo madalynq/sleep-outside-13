@@ -1,7 +1,7 @@
 import { getLocalStorage } from './utils.mjs';
 
 /**
- * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevent HTML
+ * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevant HTML
  */
 function renderCartContents() {
   const cartItems = getLocalStorage('so-cart');
@@ -15,7 +15,7 @@ function renderCartContents() {
 
 /**
  * @param {Object} item - cart item to build HTML for
- * @returns {String} string representation of relevent HTML
+ * @returns {String} string representation of relevant HTML
  * @description `item` object requires the following keys:
  * - Image(String),
  * - Name(String),

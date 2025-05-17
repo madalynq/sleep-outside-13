@@ -32,7 +32,7 @@ function productDetailsTemplate(product) {
 export default class ProductDetails {
   /**
    * @param {String} productId - ID for given product
-   * @param {DataSource} dataSource - DataSource of given product
+   * @param {ProductData} dataSource - ProductData for given product
    */
   constructor(productId, dataSource) {
     this.productId = productId;
