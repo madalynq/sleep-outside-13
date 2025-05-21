@@ -77,3 +77,32 @@ export function renderListWithTemplate(
 }
 // or a more "concise" version if you are into that sort of thing:
 // export const renderListWithTemplate = (templateFn, parentElement, list, position = 'afterbegin', clear = false) => ((clear ? parentElement.innerHTML = '' : void 0), parentElement.insertAdjacentHTML(position, list.map(templateFn).join('')));
+
+/**
+ * @param {Function} templateFn - function to map list items with
+ * @param {Element} parentElement HTML element to parent list items to
+ * @param {Array} data - items to list
+ * @param {'beforebegin'|'afterbegin'|'beforeend'|'afterend'} position - where to place list HTML. See https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#parameters for details
+ * @param {Boolean} clear - whether to remove existing HTML from parent element. true: remove; false: keep
+ */
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML('afterbegin', template);
+  if (callback) callback(data);
+}
+// or a more "concise" version if you are into that sort of thing:
+// export const renderListWithTemplate = (templateFn, parentElement, list, position = 'afterbegin', clear = false) => ((clear ? parentElement.innerHTML = '' : void 0), parentElement.insertAdjacentHTML(position, list.map(templateFn).join('')));
+
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  if (res.ok) return await res.text();
+}
+
+export async function loadHeaderFooter() {
+  const header = await loadTemplate('../partials/header.html');
+  const headerEl = document.getElementById('main-header');
+  renderWithTemplate(header, headerEl);
+
+  const footer = await loadTemplate('../partials/footer.html');
+  const footerEl = document.getElementById('main-footer');
+  renderWithTemplate(footer, footerEl);
+}
