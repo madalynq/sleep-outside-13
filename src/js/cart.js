@@ -1,5 +1,8 @@
 import { getLocalStorage } from './utils.mjs';
 
+/**
+ * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevant HTML
+ */
 function renderCartContents() {
   const cartItems = getLocalStorage('so-cart');
   if (cartItems !== null) {
@@ -10,6 +13,15 @@ function renderCartContents() {
       `<h3>Your Cart is Empty</h3>`;
 }
 
+/**
+ * @param {Object} item - cart item to build HTML for
+ * @returns {String} string representation of relevant HTML
+ * @description `item` object requires the following keys:
+ * - Image(String),
+ * - Name(String),
+ * - Colors(Array[Object])[0].ColorName(String),
+ * - FinalPrice(Number)
+ */
 function cartItemTemplate(item) {
   const newItem = `<li class='cart-card divider'>
   <a href='#' class='cart-card__image'>

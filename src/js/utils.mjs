@@ -1,19 +1,42 @@
-// wrapper for querySelector...returns matching element
+/**
+ * @description wrapper for querySelector...returns matching element
+ * @param {String} selector - CSS selector to query
+ * @param {Element} parent - parent HTML Element to query from; root document of undefined
+ * @returns {Element} found HTML element
+ */
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
 // or a more concise version if you are into that sort of thing:
 // export const qs = (selector, parent = document) => parent.querySelector(selector);
 
-// retrieve data from localstorage
+/**
+ * @description retrieve data from localstorage
+ * @param {String} key - localStorage location to retrieve
+ * @returns parsed item from localStorage
+ */
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-// save data to local storage
+// or a more concise version if you are into that sort of thing:
+// export const getLocalStorage = key => JSON.parse(localStorage.getItem(key));
+
+/**
+ * @description save data to local storage
+ * @param {String} key - localStorage location to modify
+ * @param {*} data - item to stringify and set
+ */
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+// or a more concise version if you are into that sort of thing:
+// export const setLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+
+/**
+ * @description set a listener for both touchend and click
+ * @param {String} selector - CSS selector of intended element to listen for clicks on
+ * @param {Function} callback - function to call on clicks
+ */
 export function setClick(selector, callback) {
   qs(selector).addEventListener('touchend', (event) => {
     event.preventDefault();
@@ -22,21 +45,35 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener('click', callback);
 }
 
+/**
+ * @param {String} param - URL query string to retrieve data from
+ * @returns {String|Null} contents of requested URL query string. Null if query is not found
+ */
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param);
-  return product;
+  return urlParams.get(param);
 }
+// or a more concise version if you are into that sort of thing:
+// export const getParam = param => new URLSearchParams(window.location.search).get(param);
 
+/**
+ * @param {Function} templateFn - function to map list items with
+ * @param {Element} parentElement HTML element to parent list items to
+ * @param {Array} list - items to list
+ * @param {'beforebegin'|'afterbegin'|'beforeend'|'afterend'} position - where to place list HTML. See https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#parameters for details
+ * @param {Boolean} clear - whether to remove existing HTML from parent element. true: remove; false: keep
+ */
 export function renderListWithTemplate(
   templateFn,
   parentElement,
   list,
-  position = 'afterBegin',
+  position = 'afterbegin',
   clear = false,
 ) {
   if (clear) parentElement.innerHTML = '';
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
 }
+// or a more "concise" version if you are into that sort of thing:
+// export const renderListWithTemplate = (templateFn, parentElement, list, position = 'afterbegin', clear = false) => ((clear ? parentElement.innerHTML = '' : void 0), parentElement.insertAdjacentHTML(position, list.map(templateFn).join('')));
