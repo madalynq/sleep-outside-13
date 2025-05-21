@@ -241,6 +241,35 @@ button {
   grid-column: 3;
 }
 
+/* start alert list */
+.alert-list p {
+  background-color: var(--tertiary-color);
+  color: #fff;
+  font-size: var(--font-base);
+  position: relative;
+}
+
+.alert-list button {
+  aspect-ratio: 1;
+  height: 1.5em;
+  background: #0001;
+  border: 2px solid currentColor;
+  border-radius: 999in;
+  color: inherit;
+  font-size: 99%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-25%, -50%);
+}
+
+.alert-list button:hover {
+  box-shadow: 0 0 0.2em currentColor;
+}
+/* end alert list */
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
