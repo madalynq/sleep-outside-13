@@ -25,13 +25,17 @@ const shoppingCartTemplate = (item) => `<li class='cart-card divider'>
 </li>`;
 
 export default class ShoppingCart {
+  /**
+   * @param {HTMLElement} parent - parent element to append cart items to
+   * @param {Object[]} cartItems - contents of cart to be rendered
+   */
   constructor(parent, cartItems) {
     this.parent = parent;
     this.cartItems = cartItems;
   }
 
   /**
-   * @description retrieves cart items from localStorage and builds the corresponding HTML, then sets the relevant HTML
+   * @description renders cart from template if there are items to render; otherwise displays empty cart message
    */
   init() {
     if (this.cartItems !== null)
