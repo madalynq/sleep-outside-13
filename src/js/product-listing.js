@@ -11,4 +11,5 @@ const category = getParam('category');
 const productList = new ProductList(category, productData, listElement);
 productList.init();
 
-document.querySelector('.title.highlight').textContent = category.charAt(0).toUpperCase() + category.slice(1);
+document.querySelector('.title.highlight').textContent =
+  category.charAt(0).toUpperCase() + category.slice(1);
