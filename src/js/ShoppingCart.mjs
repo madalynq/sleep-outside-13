@@ -12,7 +12,7 @@ import { renderListWithTemplate } from './utils.mjs';
 const shoppingCartTemplate = (item) => `<li class='cart-card divider'>
   <a href='#' class='cart-card__image'>
     <img
-      src='${item.Image}'
+      src='${item.Images.PrimarySmall}'
       alt='${item.Name}'
     />
   </a>
