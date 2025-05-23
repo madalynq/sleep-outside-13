@@ -1,4 +1,8 @@
-import { renderListWithTemplate } from './utils.mjs';
+import {
+  renderListWithTemplate,
+  getLocalStorage,
+  setLocalStorage,
+} from './utils.mjs';
 
 /**
  * @param {Object} item - cart item to build HTML for
@@ -9,7 +13,10 @@ import { renderListWithTemplate } from './utils.mjs';
  * - Colors(Array[Object])[0].ColorName(String),
  * - FinalPrice(Number)
  */
-const shoppingCartTemplate = (item) => `<li class='cart-card divider'>
+const shoppingCartTemplate = (
+  item,
+) => `<li class='cart-card divider' data-product="${item.Id}">
+  <button class="cart-card__remove" title="Remove item from cart" role="button">X</button>
   <a href='#' class='cart-card__image'>
     <img
       src='${item.Image}'
@@ -38,8 +45,30 @@ export default class ShoppingCart {
    * @description renders cart from template if there are items to render; otherwise displays empty cart message
    */
   init() {
-    if (this.cartItems !== null)
-      renderListWithTemplate(shoppingCartTemplate, this.parent, this.cartItems);
-    else this.parent.innerHTML = `<h3>Your Cart is Empty</h3>`;
+    if (this.cartItems !== null && this.cartItems.length > 0) {
+      renderListWithTemplate(
+        shoppingCartTemplate,
+        this.parent,
+        this.cartItems,
+        undefined,
+        true,
+      );
+      this.parent
+        .querySelectorAll('.cart-card__remove')
+        .forEach((el) =>
+          el.addEventListener('click', this.removeFromCart.bind(this)),
+        );
+    } else this.parent.innerHTML = `<h3>Your Cart is Empty</h3>`;
+  }
+
+  /**
+   * @param {String|Event} e - either ID of the product to remove, or a click event object from the remove from cart button
+   */
+  removeFromCart(e) {
+    const id =
+      typeof e === 'string' ? e : e.target.parentElement.dataset.product;
+    this.cartItems = getLocalStorage('so-cart').filter((i) => i.Id !== id);
+    setLocalStorage('so-cart', this.cartItems);
+    this.init();
   }
 }
