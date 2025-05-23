@@ -110,3 +110,21 @@ export async function loadHeaderFooter() {
     renderWithTemplate(template, element);
   }
 }
+
+// Moved to utils as importing from cart caused the header to be loaded twice
+/**
+ * @description gets the count of items in a users cart and displays it by the cart icon. hidden if cart is empty
+ */
+export function updateCartCount() {
+  const cartItems = getLocalStorage('so-cart') || [];
+  const itemCount = cartItems.length; // Or sum quantity if quantity varies
+
+  const cartCount = document.querySelector('.cart-count');
+
+  if (itemCount > 0) {
+    cartCount.textContent = itemCount;
+    cartCount.style.display = 'inline-block';
+  } else {
+    cartCount.style.display = 'none';
+  }
+}
