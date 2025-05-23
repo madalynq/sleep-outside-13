@@ -6,7 +6,8 @@ import { renderListWithTemplate } from './utils.mjs';
  * @param {String} Name - brand with name
  * @param {String} Image - product image path
  * @param {String} Brand - brand without name
- * @param {Number} FinalPrice - price of product
+ * @param {Number} SuggestedRetailPrice - suggested retail price of product
+ * @param {Number} FinalPrice - actual price of product
  * @returns {String} HTML string representation of product
  */
 const productCardTemplate = ({
@@ -15,6 +16,7 @@ const productCardTemplate = ({
   Name,
   Image,
   Brand,
+  SuggestedRetailPrice,
   FinalPrice,
 }) => `
 <li class="product-card">
@@ -22,7 +24,15 @@ const productCardTemplate = ({
     <img src="${Image}" alt="${Name}">
     <h3 class="card__brand">${Brand.Name}</h3>
     <h2 class="card__name">${NameWithoutBrand}</h2>
-    <p class="product-card__price">$${FinalPrice}</p>
+    <p class="product-card__price">$${FinalPrice}</p>${
+      FinalPrice < SuggestedRetailPrice
+        ? `
+    <p>
+      <span class="discount">$${SuggestedRetailPrice.toFixed(2)}</span>
+      <span class="percent">${Math.round(((SuggestedRetailPrice - FinalPrice) / SuggestedRetailPrice) * 100)}% off</span>
+    </p>`
+        : ''
+    }
   </a>
 </li>`;
 
