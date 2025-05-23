@@ -1,4 +1,3 @@
-import { loadHeaderFooter, updateCartCount } from './utils.mjs';
+import { loadHeaderFooter } from './utils.mjs';
 
-await loadHeaderFooter();
-updateCartCount();
+loadHeaderFooter();

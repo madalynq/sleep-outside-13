@@ -109,13 +109,14 @@ export async function loadHeaderFooter() {
     const element = document.getElementById(`main-${part}`);
     renderWithTemplate(template, element);
   }
+  updateCartCount();
 }
 
 // Moved to utils as importing from cart caused the header to be loaded twice
 /**
  * @description gets the count of items in a users cart and displays it by the cart icon. hidden if cart is empty
  */
-export function updateCartCount() {
+function updateCartCount() {
   const cartItems = getLocalStorage('so-cart') || [];
   const itemCount = cartItems.length; // Or sum quantity if quantity varies
 
