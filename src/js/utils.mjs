@@ -77,3 +77,36 @@ export function renderListWithTemplate(
 }
 // or a more "concise" version if you are into that sort of thing:
 // export const renderListWithTemplate = (templateFn, parentElement, list, position = 'afterbegin', clear = false) => ((clear ? parentElement.innerHTML = '' : void 0), parentElement.insertAdjacentHTML(position, list.map(templateFn).join('')));
+
+/**
+ * @param {String} template - HTML as a string to render
+ * @param {Element} parentElement HTML element to append template to
+ * @param {*} data? - arguments for callback function
+ * @param {Function} callback? - callback function to execute
+ */
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.insertAdjacentHTML('afterbegin', template);
+  if (callback) callback(data);
+}
+// or a more concise version if you are into that sort of thing:
+// export const renderWithTemplate = (template, parentElement, data, callback) => (parentElement.insertAdjacentHTML('afterbegin', template), callback ? callback(data) : void 0);
+
+/**
+ * @param {String} path - path to template
+ * @returns {String} template HTML as string
+ */
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  if (res.ok) return await res.text();
+}
+
+/**
+ * @description loads the header and footer for each page from the template files in `public/partials/{header|footer}.html`
+ */
+export async function loadHeaderFooter() {
+  for (const part of ['header', 'footer']) {
+    const template = await loadTemplate(`../partials/${part}.html`);
+    const element = document.getElementById(`main-${part}`);
+    renderWithTemplate(template, element);
+  }
+}
