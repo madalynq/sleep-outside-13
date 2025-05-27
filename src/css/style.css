@@ -286,6 +286,14 @@ button {
   z-index: var(--zi-card-card-has-remove-hover);
 }
 
+.cart-total {
+  margin-top: 0.2em;
+  font-size: 1.17em;
+  font-weight: 700;
+  text-align: right;
+  width: 96%;
+}
+
 /* if product is on sale */
 .discount {
   text-decoration: line-through;

@@ -2,6 +2,7 @@ import {
   renderListWithTemplate,
   getLocalStorage,
   setLocalStorage,
+  updateCartTotal,
 } from './utils.mjs';
 
 /**
@@ -70,5 +71,6 @@ export default class ShoppingCart {
     this.cartItems = getLocalStorage('so-cart').filter((i) => i.Id !== id);
     setLocalStorage('so-cart', this.cartItems);
     this.init();
+    updateCartTotal();
   }
 }
