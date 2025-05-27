@@ -131,7 +131,7 @@ function updateCartCount() {
 }
 
 export function updateCartTotal() {
-  const cartItems = getLocalStorage('so-cart');
+  const cartItems = getLocalStorage('so-cart') || [];
   const cartTotal = document.querySelector('.cart-total'); // reference html element
   let runningTotal = 0; // create variable to hold running total
 
@@ -150,6 +150,7 @@ export function updateCartTotal() {
     cartTotal.style.display = 'none';
   }
 }
+
 /**
  * @param {String} text - piece of text to capitalize the first letter of
  * @returns {String} Capitalized text
