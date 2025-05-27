@@ -11,6 +11,9 @@ const shoppingCart = new ShoppingCart(
 );
 
 shoppingCart.init();
-updateCartTotal();
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartTotal();
+});
 
 loadHeaderFooter();
