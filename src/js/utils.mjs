@@ -134,12 +134,12 @@ export function updateCartTotal() {
   const cartItems = getLocalStorage('so-cart');
   const cartTotal = document.querySelector('.cart-total'); // reference html element
   let runningTotal = 0; // create variable to hold running total
-  
+
   // loop through cart items and add FinalPrice to running total
   for (let i = 0; i < cartItems.length; i++) {
     runningTotal += cartItems[i].FinalPrice; //add price of item to running total
   }
-  
+
   const total = runningTotal.toFixed(2); // create variable to display total to the hundredths
   cartTotal.textContent = `Cart Total: $ ${total}`; // display total of cart on page
 
