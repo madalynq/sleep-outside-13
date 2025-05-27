@@ -1,10 +1,10 @@
-import { renderListWithTemplate } from './utils.mjs';
+import { renderListWithTemplate, capitalizeAll } from './utils.mjs';
 
 /**
  * @param {String} Id - product ID
  * @param {String} NameWithoutBrand - name without brand
  * @param {String} Name - brand with name
- * @param {String} Image - product image path
+ * @param {String} Images - product image path
  * @param {String} Brand - brand without name
  * @param {Number} SuggestedRetailPrice - suggested retail price of product
  * @param {Number} FinalPrice - actual price of product
@@ -14,14 +14,14 @@ const productCardTemplate = ({
   Id,
   NameWithoutBrand,
   Name,
-  Image,
+  Images,
   Brand,
   SuggestedRetailPrice,
   FinalPrice,
 }) => `
 <li class="product-card">
-  <a href="product_pages/?product=${Id}">
-    <img src="${Image}" alt="${Name}">
+  <a href="../product_pages/?product=${Id}">
+    <img src="${Images.PrimaryMedium}" alt="${Name}">
     <h3 class="card__brand">${Brand.Name}</h3>
     <h2 class="card__name">${NameWithoutBrand}</h2>
     <p class="product-card__price">$${FinalPrice}</p>${
@@ -52,7 +52,16 @@ export default class ProductList {
    * @description retrieves products to render as a list from the dataSource, then calls this.renderList
    */
   async init() {
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
+    const categoryCapitalized = capitalizeAll(
+      this.category.split('-').join(' '),
+    );
+    document.getElementById('product-category').textContent =
+      categoryCapitalized;
+    document.title = document.title.replace(
+      '{{product-category}}',
+      categoryCapitalized,
+    );
     this.renderList(list);
   }
 

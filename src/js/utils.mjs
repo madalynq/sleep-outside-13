@@ -150,3 +150,16 @@ export function updateCartTotal() {
     cartTotal.style.display = 'none';
   }
 }
+/**
+ * @param {String} text - piece of text to capitalize the first letter of
+ * @returns {String} Capitalized text
+ */
+export const capitalize = (text) =>
+  text.replace(/^[a-z]/, (l) => l.toUpperCase());
+
+/**
+ * @param {String} text - piece of text to capitalize the first letters of each word in
+ * @returns {String} Capitalized text
+ */
+export const capitalizeAll = (text) =>
+  text.replace(/\b[a-z]/g, (l) => l.toUpperCase());

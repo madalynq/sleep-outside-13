@@ -118,6 +118,10 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
+.center {
+  text-align: center;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */

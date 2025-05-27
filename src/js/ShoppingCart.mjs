@@ -20,7 +20,7 @@ const shoppingCartTemplate = (
   <button class="cart-card__remove" title="Remove item from cart" role="button">X</button>
   <a href='#' class='cart-card__image'>
     <img
-      src='${item.Image}'
+      src='${item.Images.PrimarySmall}'
       alt='${item.Name}'
     />
   </a>
