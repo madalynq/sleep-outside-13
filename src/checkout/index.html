@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,53 +12,106 @@
     <header class="divider" id="main-header"></header>
 
     <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
-      <section>
-        <form name="checkout">
-          <fieldset>
-            <legend>Customer Name</legend>
-            <label for="first">First Name</label>
-            <input type="name" id="first" name="first" required>
+      <section class="checkout">
+        <form name="checkout" id="checkout-form">
+          <h2 class="divider">Review & Place your Order</h2>
 
-            <label for="last">Last Name</label>
-            <input type="name" id="last" name="last" required>
-          </fieldset>
-          <fieldset>
-            <legend>Address</legend>
-            <label for="address">Street Address</label>
-            <input type="address" id="address" name="address" required>
-            <label for="city">City</label>
-            <input type="city" id="city" name="city" required>
-            <label for="state">State</label>
-            <input type="state" id="state" name="state" required>
-            <label for="zip">Zip Code</label>
-            <input type="zip" id="zip" name="zip-code" required>
-          </fieldset>
-          <fieldset>
-            <legend>Payment</legend>
-            <label for="ccnum">Credit Card Number</label>
-            <input type="credit" id="ccnum" name="credit" placeholder="1111-2222-3333-4444" required>
-            <label for="expyear">Expiration Date</label>
-            <input type="month" id="expyear" name="expiration" required>
-            <label for="cvv">Security Code</label>
-            <input type="text" id="cvv" name="cvv" pattern="\d{3}\" placeholder="000" required>
-          </fieldset>
-
-          <section class="order-summary">
-            <h3>Order Summary</h3>
-            <h4>Items</h4>
-            <p id="num-items"></p>
-            <h4>Subtotal</h4>
-            <p id="subtotal"></p>
-            <h4>Tax</h4>
-            <p id="tax"></p>
-            <h4>Shipping</h4>
-            <p id="shipping"></p>
-            <h3>Total</h3>
-            <p id="total"></p>
+          <section class="divider">
+            <label for="fname">First name</label>
+            <input
+              type="name"
+              id="fname"
+              name="fname"
+              required
+              placeholder="Alex"
+            />
+            <label for="lname">Last name</label>
+            <input
+              type="name"
+              id="lname"
+              name="lname"
+              required
+              placeholder="Smith"
+            />
           </section>
+
+          <section class="divider">
+            <label for="street">Street address</label>
+            <input
+              type="address"
+              id="street"
+              name="street"
+              required
+              placeholder="123 A Street"
+            />
+            <label for="city">City</label>
+            <input
+              type="city"
+              id="city"
+              name="city"
+              required
+              placeholder="Anywhere"
+            />
+            <label for="state">State</label>
+            <input
+              type="state"
+              id="state"
+              name="state"
+              required
+              placeholder="Idafornia"
+            />
+            <label for="zip">Zip Code</label>
+            <input
+              type="zip"
+              id="zip"
+              name="zip"
+              required
+              placeholder="12345"
+            />
+          </section>
+
+          <section class="divider">
+            <label for="cardNumber">Credit card #</label>
+            <input
+              type="credit"
+              id="cardNumber"
+              name="cardNumber"
+              required
+              placeholder="1111-2222-3333-4444"
+            />
+            <label for="expiration">Exp. date</label>
+            <input
+              type="month"
+              id="expiration"
+              name="expiration"
+              required
+              placeholder="1/23"
+            />
+            <label for="code">Security code</label>
+            <input
+              type="text"
+              id="code"
+              name="code"
+              required
+              pattern="\d{3}"
+              placeholder="000"
+            />
+          </section>
+
+          <section class="order-summary divider">
+            <h3>Order Summary</h3>
+            <b>Items</b>
+            <span id="itemCount">...</span>
+            <b>Subtotal</b>
+            <span id="subtotal">...</span>
+            <b>Tax</b>
+            <span id="tax">...</span>
+            <b>Shipping</b>
+            <span id="shipping">...</span>
+            <b>Total</b>
+            <span id="orderTotal">...</span>
+          </section>
+
           <button type="submit" id="checkoutSubmit">Checkout</button>
         </form>
       </section>

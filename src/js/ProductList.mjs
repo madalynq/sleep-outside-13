@@ -39,7 +39,7 @@ const productCardTemplate = ({
 export default class ProductList {
   /**
    * @param {String} category - category of the products
-   * @param {ProductData} dataSource - ProductData class holding relevant data
+   * @param {ExternalServices} dataSource - ExternalServices class holding relevant data
    * @param {Element} listElement - HTML element to parent list items to
    */
   constructor(category, dataSource, listElement) {

@@ -350,6 +350,85 @@ button {
 
 /* end alert list */
 
+/* start checkout */
+
+.checkout {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.33rem;
+}
+
+#checkout-form {
+  border-radius: 0.25em;
+  box-shadow:
+    4px 0 8px #e1e1e1e1,
+    -4px 0 8px #e1e1e1e1;
+  display: grid;
+  grid-template-columns: auto calc(33.33% * 1.618);
+  margin: 0 auto;
+  max-width: 360px;
+  padding: 1em 0;
+  width: 100%;
+}
+
+#checkout-form h2 {
+  padding-bottom: 0.5em;
+}
+
+#checkout-form section {
+  grid-column: 1/-1;
+  border-width: 0 0 2px 0;
+  display: grid;
+  grid-template-columns: subgrid;
+  margin-bottom: 0.5em;
+  text-align: right;
+}
+
+#checkout-form input::placeholder {
+  font-style: italic;
+}
+
+#checkout-form label,
+#checkout-form input,
+#checkout-form b,
+#checkout-form span {
+  border: 0;
+  font-size: var(--font-base);
+  padding: 0.22em 0.33em;
+}
+
+#checkout-form label:nth-of-type(even),
+#checkout-form input:nth-of-type(even),
+#checkout-form b:nth-of-type(odd),
+#checkout-form span:nth-of-type(odd) {
+  background-color: #e1e1e1e1;
+}
+
+#checkout-form :where(h2, h3, button) {
+  grid-column: 1/-1;
+  text-align: center;
+}
+
+#checkout-form span {
+  text-align: left;
+}
+
+#checkoutSubmit {
+  background-color: #e1e1e1e1;
+  border-radius: 0.5em;
+  color: var(--dark-grey);
+  margin-top: 0.33em;
+}
+
+#checkoutSubmit:hover {
+  background-color: var(--light-grey);
+}
+
+/* end checkout */
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

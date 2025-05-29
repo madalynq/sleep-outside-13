@@ -10,7 +10,7 @@ function convertToJson(res) {
   else throw new Error('Bad Response');
 }
 
-export default class ProductData {
+export default class ExternalServices {
   constructor() {}
 
   /**
@@ -30,5 +30,13 @@ export default class ProductData {
    */
   async findProductById(id) {
     return (await convertToJson(await fetch(`${baseURL}product/${id}`))).Result;
+  }
+
+  async checkout(data) {
+    return await fetch(`${baseURL}checkout/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
   }
 }

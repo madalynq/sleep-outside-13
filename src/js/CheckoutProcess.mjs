@@ -1,78 +1,79 @@
-import {
-  getLocalStorage
-} from './utils.mjs';
+import ExternalServices from './ExternalServices.mjs';
+const externalServices = new ExternalServices();
+
+const packageItems = (items) =>
+  items.map((item) => ({
+    id: item.Id,
+    price: item.FinalPrice,
+    name: item.Name,
+    quantity: 1,
+  }));
 
 export default class CheckoutProcess {
-    constructor(cart, outputSelector) {
-        this.cart = cart;
-        this.outputSelector = outputSelector;
-        this.calculateSubTotal();
+  constructor(cart, outputSelector) {
+    this.cart = cart;
+
+    this.itemCountEl = document.querySelector(`${outputSelector} #itemCount`);
+    this.subtotalEl = document.querySelector(`${outputSelector} #subtotal`);
+    this.taxEl = document.querySelector(`${outputSelector} #tax`);
+    this.shippingEl = document.querySelector(`${outputSelector} #shipping`);
+    this.orderTotalEl = document.querySelector(`${outputSelector} #orderTotal`);
+
+    this.getItemCount();
+    this.getSubtotal();
+    this.getTax();
+    this.displayTotals();
+  }
+
+  getItemCount = () => (this.itemTotal = this.cart.length);
+  getSubtotal = () =>
+    (this.subtotal = this.cart
+      .map((item) => item.FinalPrice)
+      .reduce((sum, item) => sum + item, 0));
+  getTax = () => (this.tax = this.subtotal * 0.06);
+  getShipping = () => (this.shipping = this.itemTotal * 2 + 8);
+
+  getTotal() {
+    this.orderTotal =
+      parseFloat(this.subtotal) +
+      parseFloat(this.tax) +
+      parseFloat(this.shipping);
+  }
+
+  displayTotals(withTax = false) {
+    this.itemCountEl.textContent = this.itemTotal;
+    this.taxEl.textContent = `$${this.tax.toFixed(2)}`;
+    this.subtotalEl.textContent = `$${this.subtotal.toFixed(2)}`;
+    if (withTax) {
+      this.shippingEl.textContent = `$${this.shipping.toFixed(2)}`;
+      this.orderTotalEl.textContent = `$${this.orderTotal.toFixed(2)}`;
     }
+  }
 
-    calculateSubTotal() {
-        let runningTotal = 0; // create variable to hold running total
+  updateTotal() {
+    this.getShipping();
+    this.getTotal();
+    this.displayTotals(true);
+  }
 
-        // loop through cart items and add FinalPrice to running total
-        for (let i = 0; i < this.cart.length; i++) {
-            runningTotal += this.cart[i].FinalPrice; //add price of item to running total
-        }
+  async checkout() {
+    const formData = new FormData(document.forms['checkout']);
 
-        const subtotal = runningTotal.toFixed(2); // create variable to display total to the hundredths
+    const order = {};
+    formData.forEach((value, key) => (order[key] = value));
 
-        return this.subtotal = subtotal;
+    order.orderDate = new Date().toISOString();
+    order.orderTotal = this.orderTotal;
+    order.tax = this.tax;
+    order.shipping = this.shipping;
+    order.items = packageItems(this.cart);
+
+    try {
+      // Using window['console] as ESLint does not like console
+      const res = await externalServices.checkout(order);
+      window['console'].log(res, await res.json());
+    } catch (e) {
+      window['console'].error(e);
     }
-
-    calculateItemSummary() {
-        const summaryElement = document.querySelector(
-            this.outputSelector + "#cartTotal"
-        );
-        const itemNumElement = document.querySelector(
-            this.outputSelector + "#num-items"
-        );
-        itemNumElement.innerText = this.list.length;
-
-        const amounts = this.list.map((item) => item.FinalPrice);
-        this.itemTotal = amounts.reduce((sum, item) => sum + item);
-        summaryElement.innerText = `$${this.itemTotal}`;;
-    }
-
-    totalCalculator() {
-        this.tax = (this.itemTotal * 0.06);
-        this.shipping = 10 + (this.list.length - 1) * 2;
-        this.orderTotal = (
-            parseFloat(this.itemTotal) +
-            parseFloat(this.tax) +
-            parseFloat(this.shipping)
-        )
-        this.displayTotals();
-    }
-
-    displayTotals() {
-        const tax = document.querySelector(`${this.outputSelector} #tax`);
-        const shipping = document.querySelector(`${this.outputSelector} #shipping`);
-        const orderTotal = document.querySelector(`${this.outputSelector} #orderTotal`);
-
-        tax.innerText = `$${this.tax.toFixed(2)}`;
-        shipping.innerText = `$${this.shipping.toFixed(2)}`;
-        orderTotal.innerText = `$${this.orderTotal.toFixed(2)}`;
-    }
-
-    async checkout() {
-        const formElement = document.forms["checkout"];
-        const order = formDataToJSON(formElement);
-
-        order.orderDate = new Date().toISOString();
-        order.orderTotal = this.orderTotal;
-        order.tax = this.tax;
-        order.shipping = this.shipping;
-        order.items = packageItems(this.list);
-        //console.log(order);
-
-        try {
-        const response = await services.checkout(order);
-        console.log(response);
-        } catch (err) {
-        console.log(err);
-        }
-    }
+  }
 }

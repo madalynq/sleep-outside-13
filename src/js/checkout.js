@@ -3,14 +3,16 @@ import CheckoutProcess from './CheckoutProcess.mjs';
 
 loadHeaderFooter();
 
-const cart = getLocalStorage("so-cart");
-const order = new CheckoutProcess(cart, ".order-summary");
+const order = new CheckoutProcess(
+  getLocalStorage('so-cart') || [],
+  '.order-summary',
+);
 
-document.querySelector("#zip");
-document.addEventListener("blur", order.totalCalculator.bind(order));
+document
+  .querySelector('#zip')
+  .addEventListener('blur', order.updateTotal.bind(order));
 
-document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
-    e.preventDefault();
-
-    order.checkout();
-})
+document.getElementById('checkout-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  order.checkout();
+});
