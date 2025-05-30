@@ -30,15 +30,16 @@ export default class ExternalServices {
    * @returns {Object} found product data with given ID
    */
   async findProductById(id) {
-    return (await convertToJson(await fetch(`${this.baseURL}product/${id}`))).Result;
+    return (await convertToJson(await fetch(`${this.baseURL}product/${id}`)))
+      .Result;
   }
 
   async checkout(order) {
-      const response = await fetch(this.baseURL + 'checkout/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-      });
-      return await convertToJson(response); // return parsed result or throw error
+    const response = await fetch(this.baseURL + 'checkout/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+    return await convertToJson(response); // return parsed result or throw error
   }
 }

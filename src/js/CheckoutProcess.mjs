@@ -1,7 +1,9 @@
 import ExternalServices from './ExternalServices.mjs';
 import { alertMessage } from './utils.mjs';
 
-const externalServices = new ExternalServices(import.meta.env.VITE_SERVER_URL || '');
+const externalServices = new ExternalServices(
+  import.meta.env.VITE_SERVER_URL || '',
+);
 
 const packageItems = (items) =>
   items.map((item) => ({
@@ -81,7 +83,6 @@ export default class CheckoutProcess {
 
       localStorage.clear();
       window.location.href = 'success.html';
-
     } catch (err) {
       console.log('Full error:', err);
       if (err.name === 'servicesError' && typeof err.message === 'object') {

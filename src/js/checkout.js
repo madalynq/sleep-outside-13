@@ -19,8 +19,5 @@ document.getElementById('checkout-form').addEventListener('submit', (e) => {
   const chk_status = myForm.checkValidity();
   myForm.reportValidity();
 
-  if(chk_status)
-    order.checkout();
+  if (chk_status) order.checkout();
 });
-
-

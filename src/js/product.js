@@ -1,4 +1,9 @@
-import { loadHeaderFooter, getParam, cartAnimation, updateTheCartNum } from './utils.mjs';
+import {
+  loadHeaderFooter,
+  getParam,
+  cartAnimation,
+  updateTheCartNum,
+} from './utils.mjs';
 import ExternalServices from './ExternalServices.mjs';
 import ProductDetails from './ProductDetails.mjs';
 
@@ -13,6 +18,6 @@ loadHeaderFooter();
 const addToCart = document.querySelector('#addToCart');
 
 addToCart.addEventListener('click', () => {
-    updateTheCartNum();
-    cartAnimation();
-})
+  updateTheCartNum();
+  cartAnimation();
+});
