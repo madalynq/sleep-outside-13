@@ -186,3 +186,27 @@ export function alertMessage(message, scroll = true) {
 
   if (scroll) window.scrollTo(0, 0);
 }
+
+export function cartAnimation() {
+  const cartCount = document.querySelector('.cart-count');
+  if (!cartCount) return;
+
+  cartCount.classList.remove('cart-pop');
+  void cartCount.offsetWidth;
+  cartCount.classList.add('cart-pop');
+}
+
+export function updateTheCartNum() {
+  const cartItems = getLocalStorage('so-cart') || [];
+  const cartCountEl = document.querySelector('.cart-count');
+  if (!cartCountEl) return;
+
+  const count = cartItems.length;
+  cartCountEl.textContent = count;
+
+  if (count === 0) {
+    cartCountEl.style.display = 'none';
+  } else {
+    cartCountEl.style.display = 'inline-block';
+  }
+}

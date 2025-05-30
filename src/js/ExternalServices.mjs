@@ -11,7 +11,7 @@ async function convertToJson(res) {
 
 export default class ExternalServices {
   constructor(baseURL) {
-    this.baseURL = baseURL;
+    this.baseURL = import.meta.env.VITE_SERVER_URL || '';
   }
 
   /**

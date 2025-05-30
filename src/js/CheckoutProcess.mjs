@@ -1,7 +1,7 @@
 import ExternalServices from './ExternalServices.mjs';
 import { alertMessage } from './utils.mjs';
 
-const externalServices = new ExternalServices("http://localhost:5173/");
+const externalServices = new ExternalServices(import.meta.env.VITE_SERVER_URL || '');
 
 const packageItems = (items) =>
   items.map((item) => ({
