@@ -32,17 +32,9 @@ import { renderListWithTemplate } from './utils.mjs';
 const alertTemplate = ({ message, background, color }) =>
   message === undefined
     ? ''
-    : `<p style="${background ? `background: ${background};` : ''}${color ? `color: ${color};` : ''}">${message}<button onClick="this.parentElement.remove()">X</button></p>`;
+    : `<p class="alert" style="${background ? `background: ${background};` : ''}${color ? `color: ${color};` : ''}">${message}<button onClick="this.parentElement.remove()">X</button></p>`;
 
 export default class Alert {
-  /**
-   * @description calls this.init
-   */
-  constructor() {
-    // constructors are not allowed to be async
-    this.init();
-  }
-
   /**
    * @description gets alerts and returns if none. Else calls buildBox and populates alertBox with alerts
    */
@@ -51,18 +43,33 @@ export default class Alert {
 
     // early exit if there are no alerts
     if (this.alerts.length < 1) return;
+    this.renderAlerts();
+  }
 
-    this.buildBox();
-    renderListWithTemplate(alertTemplate, this.alertsBox, this.alerts);
+  /**
+   * @description renders any stored alerts
+   */
+  renderAlerts(alerts = this.alerts) {
+    if (!this.alertsBox) this.buildBox();
+    renderListWithTemplate(alertTemplate, this.alertsBox, alerts);
+  }
+
+  renderAlert(alert) {
+    if (!this.alertsBox) this.buildBox();
+    renderListWithTemplate(alertTemplate, this.alertsBox, [alert]);
   }
 
   /**
    * @description builds alertBox and prepends it to main HTML element
    */
   buildBox() {
-    this.alertsBox = document.createElement('section');
-    this.alertsBox.classList.add('alert-list');
-    document.querySelector('main').prepend(this.alertsBox);
+    this.alertsBox = document.querySelector('.alert-list');
+
+    if (!this.alertsBox) {
+      this.alertsBox = document.createElement('section');
+      this.alertsBox.classList.add('alert-list');
+      document.querySelector('main').prepend(this.alertsBox);
+    }
   }
 
   /**

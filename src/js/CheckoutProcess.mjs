@@ -1,4 +1,5 @@
 import ExternalServices from './ExternalServices.mjs';
+import { setLocalStorage, alertMessage, clearAlerts } from './utils.mjs';
 const externalServices = new ExternalServices();
 
 const packageItems = (items) =>
@@ -69,11 +70,17 @@ export default class CheckoutProcess {
     order.items = packageItems(this.cart);
 
     try {
-      // Using window['console] as ESLint does not like console
       const res = await externalServices.checkout(order);
-      window['console'].log(res, await res.json());
+      // Using window['console] as ESLint does not like console
+      window['console'].log(res);
+      setLocalStorage('so-cart', []);
+      window.location.href = './success.html';
     } catch (e) {
       window['console'].error(e);
+      clearAlerts();
+
+      for (const message in e.message)
+        alertMessage(e.message[message], true, '#000', '#f707');
     }
   }
 }

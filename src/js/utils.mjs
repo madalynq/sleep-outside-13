@@ -1,3 +1,5 @@
+import Alert from './Alert.mjs';
+
 /**
  * @description wrapper for querySelector...returns matching element
  * @param {String} selector - CSS selector to query
@@ -164,3 +166,23 @@ export const capitalize = (text) =>
  */
 export const capitalizeAll = (text) =>
   text.replace(/\b[a-z]/g, (l) => l.toUpperCase());
+
+const alert = new Alert();
+
+export function alertMessage(
+  message,
+  scroll = true,
+  color = '#000',
+  bgColor = '#f707',
+) {
+  alert.renderAlert({ message, color, background: bgColor });
+  if (scroll) scrollTo(0, 0);
+}
+
+export function alertMessages(alerts, scroll = true) {
+  alert.renderAlerts(alerts);
+  if (scroll) scrollTo(0, 0);
+}
+
+export const clearAlerts = () =>
+  document.querySelectorAll('.alert').forEach((a) => a.remove());

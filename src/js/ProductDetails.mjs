@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, alertMessage } from './utils.mjs';
 
 /**
  * @param {Object} product - product object
@@ -60,6 +60,11 @@ export default class ProductDetails {
     const cartItems = getLocalStorage('so-cart') || [];
     cartItems.push(this.product);
     setLocalStorage('so-cart', cartItems);
+    alertMessage(
+      'Item added to cart!',
+      'var(--primary-color)',
+      'var(--darg-gray)',
+    );
   }
 
   /**
