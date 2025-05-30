@@ -146,11 +146,8 @@ export function updateCartTotal() {
   cartTotal.textContent = `Cart Total: $ ${total}`; // display total of cart on page
 
   // display if items in cart
-  if (cartItems.length > 0) {
-    cartTotal.style.display = 'inline-block';
-  } else {
-    cartTotal.style.display = 'none';
-  }
+
+  cartTotal.parentElement.classList.toggle('hide', !cartItems.length);
 }
 
 /**

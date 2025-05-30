@@ -11,6 +11,12 @@ const packageItems = (items) =>
   }));
 
 export default class CheckoutProcess {
+  itemTotal = 0;
+  subtotal = 0;
+  tax = 0;
+  shipping = 0;
+  orderTotal = 0;
+
   constructor(cart, outputSelector) {
     this.cart = cart;
 
@@ -41,11 +47,11 @@ export default class CheckoutProcess {
       parseFloat(this.shipping);
   }
 
-  displayTotals(withTax = false) {
+  displayTotals(withShipping = false) {
     this.itemCountEl.textContent = this.itemTotal;
     this.taxEl.textContent = `$${this.tax.toFixed(2)}`;
     this.subtotalEl.textContent = `$${this.subtotal.toFixed(2)}`;
-    if (withTax) {
+    if (withShipping) {
       this.shippingEl.textContent = `$${this.shipping.toFixed(2)}`;
       this.orderTotalEl.textContent = `$${this.orderTotal.toFixed(2)}`;
     }
