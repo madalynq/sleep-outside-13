@@ -1,5 +1,7 @@
 import ExternalServices from './ExternalServices.mjs';
-const externalServices = new ExternalServices();
+import { alertMessage } from './utils.mjs';
+
+const externalServices = new ExternalServices("http://localhost:5173/");
 
 const packageItems = (items) =>
   items.map((item) => ({
@@ -57,10 +59,15 @@ export default class CheckoutProcess {
   }
 
   async checkout() {
+    this.getShipping();
+    this.getTotal();
+
     const formData = new FormData(document.forms['checkout']);
 
     const order = {};
     formData.forEach((value, key) => (order[key] = value));
+
+    order.cardNumber = order.cardNumber.replace(/[^0-9]/g, '');
 
     order.orderDate = new Date().toISOString();
     order.orderTotal = this.orderTotal;
@@ -70,10 +77,21 @@ export default class CheckoutProcess {
 
     try {
       // Using window['console] as ESLint does not like console
-      const res = await externalServices.checkout(order);
-      window['console'].log(res, await res.json());
-    } catch (e) {
-      window['console'].error(e);
+      const result = await externalServices.checkout(order);
+
+      localStorage.clear();
+      window.location.href = 'success.html';
+
+    } catch (err) {
+      console.log('Full error:', err);
+      if (err.name === 'servicesError' && typeof err.message === 'object') {
+        for (const key in err.message) {
+          alertMessage(`${key}: ${err.message[key]}`);
+        }
+      } else {
+        alert('Unknown error occured. Please try again.');
+        console.error(err);
+      }
     }
   }
 }

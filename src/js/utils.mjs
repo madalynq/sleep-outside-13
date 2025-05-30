@@ -164,3 +164,25 @@ export const capitalize = (text) =>
  */
 export const capitalizeAll = (text) =>
   text.replace(/\b[a-z]/g, (l) => l.toUpperCase());
+
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector('main');
+
+  // Create alert container
+  const alert = document.createElement('div');
+  alert.classList.add('alert');
+  alert.innerHTML = `
+    <span>${message}</span>
+    <button class="close" aria-label="Close alert">&times;</button>
+  `;
+
+  // Add close button event
+  alert.querySelector('.close').addEventListener('click', () => {
+    alert.remove();
+  });
+
+  // Add alert to top of main
+  main.prepend(alert);
+
+  if (scroll) window.scrollTo(0, 0);
+}
