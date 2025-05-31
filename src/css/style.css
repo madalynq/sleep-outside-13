@@ -275,6 +275,10 @@ button {
   grid-template-columns: 25% auto 25%;
 }
 
+.cart-list > h3 {
+  grid-column: 1/-1;
+}
+
 /* #region cart list card */
 .cart-card {
   grid-column: 1/4;
@@ -381,8 +385,6 @@ button {
   margin-top: 0.2em;
   font-size: 1.17em;
   font-weight: 700;
-  text-align: right;
-  width: 96%;
 }
 
 .cart-footer.hide {

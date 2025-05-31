@@ -149,7 +149,7 @@ export default class ShoppingCart {
     cartTotal.textContent = `Cart Total: $ ${total.toFixed(2)}`;
 
     // display if items in cart
-    cartTotal.parentElement.classList.toggle('hide', !cartTotal);
+    cartTotal.parentElement.classList.toggle('hide', !total);
   }
 
   /**
