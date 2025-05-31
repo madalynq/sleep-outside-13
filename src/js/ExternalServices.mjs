@@ -5,9 +5,10 @@ const baseURL = import.meta.env.VITE_SERVER_URL;
  * @param {Response} res - response from Fetch request
  * @returns {JSON} parsed JSON from response
  */
-function convertToJson(res) {
-  if (res.ok) return res.json();
-  else throw new Error('Bad Response');
+async function convertToJson(res) {
+  const json = await res.json();
+  if (res.ok) return json;
+  else throw { name: 'servicesError', message: json };
 }
 
 export default class ExternalServices {
@@ -33,10 +34,12 @@ export default class ExternalServices {
   }
 
   async checkout(data) {
-    return await fetch(`${baseURL}checkout/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
+    return await convertToJson(
+      await fetch(`${baseURL}checkout/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }),
+    );
   }
 }

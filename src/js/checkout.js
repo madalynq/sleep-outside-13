@@ -3,16 +3,23 @@ import CheckoutProcess from './CheckoutProcess.mjs';
 
 loadHeaderFooter();
 
-const order = new CheckoutProcess(
-  getLocalStorage('so-cart') || [],
-  '.order-summary',
-);
+const cart = getLocalStorage('so-cart') || [];
+if (!cart.length) location.href = '../cart/';
+
+const order = new CheckoutProcess(cart, '.order-summary');
 
 document
   .querySelector('#zip')
-  .addEventListener('blur', order.updateTotal.bind(order));
+  .addEventListener('blur', (e) =>
+    e.target.value * 1 > 9999 ? order.updateTotal() : void 0,
+  );
 
 document.getElementById('checkout-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  order.checkout();
+
+  const myForm = document.forms[0];
+  const chk_status = myForm.checkValidity();
+  myForm.reportValidity();
+
+  if (chk_status) order.checkout();
 });

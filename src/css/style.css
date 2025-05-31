@@ -7,7 +7,9 @@
   --secondary-color: #525b0f;
   --tertiary-color: #8a470c;
   --light-grey: #d0d0d0;
+  --light-gray: var(--light-grey);
   --dark-grey: #303030;
+  --dark-gray: var(--dark-grey);
 
   /* sizes */
   --font-base: 18px;
@@ -248,6 +250,7 @@ button {
   grid-column: 1/4;
   display: grid;
   grid-template-columns: 25% auto 25%;
+  /* fallback if subgrid not supported even though it has been in the standard for 2 years now */
   grid-template-columns: subgrid;
   font-size: var(--small-font);
   /* max-height: 120px; */
@@ -337,6 +340,11 @@ button {
   z-index: var(--zi-card-card-has-remove-hover);
 }
 
+.cart-footer {
+  text-align: right;
+  width: 96%;
+}
+
 .cart-total {
   display: none;
   margin-top: 0.2em;
@@ -345,6 +353,35 @@ button {
   text-align: right;
   width: 96%;
 }
+/* #endregion cart list card */
+
+.cart-footer.hide {
+  display: none;
+}
+
+.cart-footer a {
+  background-color: var(--secondary-color);
+  border-radius: 0.25em;
+  color: #fff;
+  height: 1.5rem;
+  margin: 0 0.75em;
+  padding: 0.25em;
+  text-decoration: none;
+}
+
+.cart-footer a:hover {
+  box-shadow: inset 0 0 0 1em #fff3;
+  text-shadow:
+    0 0.025em var(--primary-color),
+    0.025em 0.025em var(--primary-color),
+    0.025em 0 var(--primary-color),
+    0.025em -0.025em var(--primary-color),
+    0 -0.025em var(--primary-color),
+    -0.025em -0.025em var(--primary-color),
+    -0.025em 0 var(--primary-color),
+    -0.025em 0.025em var(--primary-color);
+}
+
 /* #endregion cart list card */
 
 /* #region if product is on sale */
@@ -374,6 +411,8 @@ button {
 /* #region alert list */
 .alert-list p {
   background-color: var(--tertiary-color);
+  outline: solid 1Q #0001;
+  outline-offset: -1Q;
   color: #fff;
   font-size: var(--font-base);
   position: relative;
@@ -478,6 +517,34 @@ button {
   background-color: var(--light-grey);
 }
 
+#cart-checkout {
+  background-color: #2e7d32;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+}
+
+.alert {
+  background-color: orange;
+  color: white;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.alert .close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 /* #endregion checkout */
 
 @media screen and (min-width: 500px) {
@@ -496,6 +563,7 @@ button {
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px 1fr 20%;
+    /* fallback if subgrid not supported even though it has been in the standard for 2 years now */
     grid-template-columns: subgrid;
   }
 }
@@ -504,3 +572,25 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+/* #region animation for cart icon */
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(2.5);
+  }
+  60% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart-pop {
+  animation: pop 0.4s ease;
+}
+/* #endregion animation for cart icon */
