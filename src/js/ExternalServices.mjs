@@ -33,6 +33,11 @@ export default class ExternalServices {
     return (await convertToJson(await fetch(`${baseURL}product/${id}`))).Result;
   }
 
+  /**
+   * @description submits order to API
+   * @param {Object} data - order contents
+   * @returns {Object} json object of responce
+   */
   async checkout(data) {
     return await convertToJson(
       await fetch(`${baseURL}checkout/`, {

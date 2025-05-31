@@ -140,15 +140,16 @@ export default class ShoppingCart {
     const cartTotal = document.querySelector('.cart-total');
 
     // reduce prices of cart items; multiply individual prices by quantity
-    const total = this.cartItems
-      .reduce((prev, curr) => prev + curr.FinalPrice * (curr.Quantity || 1), 0)
-      .toFixed(2);
+    const total = this.cartItems.reduce(
+      (prev, curr) => prev + curr.FinalPrice * (curr.Quantity || 1),
+      0,
+    );
 
     // display total of cart on page
-    cartTotal.textContent = `Cart Total: $ ${total}`;
+    cartTotal.textContent = `Cart Total: $ ${total.toFixed(2)}`;
 
     // display if items in cart
-    cartTotal.style.display = this.cartItems.length ? 'inline-block' : 'unset';
+    cartTotal.parentElement.classList.toggle('hide', !cartTotal);
   }
 
   /**

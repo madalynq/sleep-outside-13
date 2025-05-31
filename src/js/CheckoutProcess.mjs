@@ -33,11 +33,14 @@ export default class CheckoutProcess {
   }
 
   getItemCount = () => (this.itemTotal = this.cart.length);
+
   getSubtotal = () =>
     (this.subtotal = this.cart
       .map((item) => item.FinalPrice)
       .reduce((sum, item) => sum + item, 0));
+
   getTax = () => (this.tax = this.subtotal * 0.06);
+
   getShipping = () => (this.shipping = this.itemTotal * 2 + 8);
 
   getTotal() {
@@ -63,10 +66,10 @@ export default class CheckoutProcess {
     this.displayTotals(true);
   }
 
+  /**
+   *
+   */
   async checkout() {
-    this.getShipping();
-    this.getTotal();
-
     const formData = new FormData(document.forms['checkout']);
 
     const order = {};

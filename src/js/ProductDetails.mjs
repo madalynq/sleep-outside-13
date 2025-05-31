@@ -1,4 +1,10 @@
-import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage } from './utils.mjs';
+import {
+  getLocalStorage,
+  setLocalStorage,
+  updateCartCount,
+  alertMessage,
+  cartAnimation,
+} from './utils.mjs';
 
 /**
  * @param {Object} product - product object
@@ -55,7 +61,6 @@ export default class ProductDetails {
 
   /**
    * @description retrieves cart from localStorage and checks if the given item is already present. If yes: add 1 to item quantity; else: set quantity to 1 and add it to cart; finally: returns cart to localStorage
-   *
    */
   addToCart() {
     const cartItems = getLocalStorage('so-cart') || [];
@@ -75,6 +80,7 @@ export default class ProductDetails {
 
     setLocalStorage('so-cart', cartItems);
     updateCartCount();
+    cartAnimation();
     alertMessage(
       'Item added to cart!',
       'var(--primary-color)',

@@ -79,7 +79,7 @@
               id="cardNumber"
               name="cardNumber"
               required
-              placeholder="1111-2222-3333-4444"
+              placeholder="1111222233334444"
               inputmode="numeric"
             />
             <label for="expiration">Exp. date</label>
@@ -88,8 +88,8 @@
               id="expiration"
               name="expiration"
               required
-              placeholder="01/23"
-              pattern="\d{2}/\d{2}"
+              placeholder="1/23"
+              pattern="^\d\/\d{2}$"
             />
             <label for="code">Security code</label>
             <input
@@ -97,10 +97,10 @@
               id="code"
               name="code"
               required
-              pattern="\d{3}"
               placeholder="000"
               min="000"
               max="999"
+              step="1"
             />
           </section>
 

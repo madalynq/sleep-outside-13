@@ -46,6 +46,7 @@ header {
 p {
   padding: 0.75rem;
 }
+
 /* #endregion generic */
 
 /* #region logo */
@@ -84,7 +85,6 @@ p {
   font-size: var(--small-font);
   width: 110px;
   height: 80px;
-
   flex-direction: column;
   align-items: flex-end;
   box-shadow: 1px 1px 4px var(--light-grey);
@@ -102,6 +102,7 @@ p {
 .logo--square > div {
   margin-top: -1.7em;
 }
+
 /* #endregion logo */
 
 /* #region utility classes */
@@ -164,6 +165,30 @@ button {
   line-height: 1;
 }
 
+/* #region animation for cart icon */
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(2.5);
+  }
+
+  60% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart-pop {
+  animation: pop 0.4s ease;
+}
+
+/* #endregion animation for cart icon */
 /* #endregion cart icon styles */
 
 /* #region mission */
@@ -184,6 +209,7 @@ button {
   width: 50%;
   text-align: center;
 }
+
 /* #endregion mission */
 
 /* #region products */
@@ -200,15 +226,11 @@ button {
   justify-content: center;
 }
 
-.cart-list {
-  display: grid;
-  grid-template-columns: 25% auto 25%;
-}
-
 .product-list a {
   text-decoration: none;
   color: var(--dark-grey);
 }
+
 /* #endregion product lists */
 
 /* #region product card */
@@ -243,7 +265,15 @@ button {
 .product-detail img {
   width: 100%;
 }
+
 /* #endregion product card */
+/* #endregion products */
+
+/* #region cart */
+.cart-list {
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+}
 
 /* #region cart list card */
 .cart-card {
@@ -253,7 +283,6 @@ button {
   /* fallback if subgrid not supported even though it has been in the standard for 2 years now */
   grid-template-columns: subgrid;
   font-size: var(--small-font);
-  /* max-height: 120px; */
   align-items: center;
   outline: dashed 0.333em #f770;
   outline-offset: -0.333em;
@@ -340,20 +369,21 @@ button {
   z-index: var(--zi-card-card-has-remove-hover);
 }
 
+/* #endregion cart list card */
+
+/* #region cart footer */
 .cart-footer {
   text-align: right;
   width: 96%;
 }
 
 .cart-total {
-  display: none;
   margin-top: 0.2em;
   font-size: 1.17em;
   font-weight: 700;
   text-align: right;
   width: 96%;
 }
-/* #endregion cart list card */
 
 .cart-footer.hide {
   display: none;
@@ -382,17 +412,14 @@ button {
     -0.025em 0.025em var(--primary-color);
 }
 
-/* #endregion cart list card */
+/* #endregion cart footer */
+/* #endregion cart */
 
 /* #region if product is on sale */
 .discount {
   text-decoration: line-through;
   opacity: 0.8;
   font-size: small;
-}
-
-#sale {
-  color: #2e7d32;
 }
 
 .percent {
@@ -404,9 +431,8 @@ button {
   padding: 2px 6px;
   border-radius: 4px;
 }
-/* #endregion if product is on sale */
 
-/* #endregion products */
+/* #endregion if product is on sale */
 
 /* #region alert list */
 .alert-list p {
@@ -441,7 +467,6 @@ button {
 /* #endregion alert list */
 
 /* #region checkout */
-
 .checkout {
   align-items: center;
   display: flex;
@@ -481,19 +506,17 @@ button {
   font-style: italic;
 }
 
-#checkout-form label,
-#checkout-form input,
-#checkout-form b,
-#checkout-form span {
+#checkout-form :where(label, input, b, span) {
   border: 0;
   font-size: var(--font-base);
   padding: 0.22em 0.33em;
 }
 
-#checkout-form label:nth-of-type(even),
-#checkout-form input:nth-of-type(even),
-#checkout-form b:nth-of-type(odd),
-#checkout-form span:nth-of-type(odd) {
+#checkout-form
+  :where(
+    :where(label, input):nth-of-type(even),
+    :where(b, span):nth-of-type(odd)
+  ) {
   background-color: #e1e1e1e1;
 }
 
@@ -517,34 +540,6 @@ button {
   background-color: var(--light-grey);
 }
 
-#cart-checkout {
-  background-color: #2e7d32;
-  padding: 5px;
-  border-radius: 5px;
-  color: white;
-  text-decoration: none;
-}
-
-.alert {
-  background-color: orange;
-  color: white;
-  padding: 16px;
-  margin-bottom: 16px;
-  position: relative;
-  border-radius: 4px;
-}
-
-.alert .close {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
 /* #endregion checkout */
 
 @media screen and (min-width: 500px) {
@@ -560,6 +555,7 @@ button {
   .cart-list {
     grid-template-columns: 150px 1fr auto;
   }
+
   .cart-card {
     font-size: inherit;
     grid-template-columns: 150px 1fr 20%;
@@ -572,25 +568,3 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
-
-/* #region animation for cart icon */
-
-@keyframes pop {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(2.5);
-  }
-  60% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.cart-pop {
-  animation: pop 0.4s ease;
-}
-/* #endregion animation for cart icon */

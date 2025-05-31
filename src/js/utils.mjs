@@ -135,7 +135,8 @@ export async function loadHeaderFooter() {
 
 //#endregiontemplate utils
 
-// Moved to utils as importing from cart caused the header to be loaded twice
+//#region cart utils
+
 /**
  * @description gets the count of items in a users cart and displays it by the cart icon. hidden if cart is empty
  */
@@ -147,48 +148,33 @@ export function updateCartCount() {
   );
   const cartCount = document.querySelector('.cart-count');
 
-  if (itemCount > 0) {
-    cartCount.textContent = itemCount;
-    cartCount.style.display = 'inline-block';
-  } else {
-    cartCount.style.display = 'none';
-  }
-}
-
-export function updateCartTotal() {
-  const cartItems = getLocalStorage('so-cart') || [];
-  const cartTotal = document.querySelector('.cart-total'); // reference html element
-  let runningTotal = 0; // create variable to hold running total
-
-  // loop through cart items and add FinalPrice to running total
-  for (let i = 0; i < cartItems.length; i++) {
-    runningTotal += cartItems[i].FinalPrice; //add price of item to running total
-  }
-
-  const total = runningTotal.toFixed(2); // create variable to display total to the hundredths
-  cartTotal.textContent = `Cart Total: $ ${total}`; // display total of cart on page
-
-  // display if items in cart
-
-  cartTotal.parentElement.classList.toggle('hide', !cartItems.length);
+  cartCount.textContent = itemCount;
+  cartCount.style.display = itemCount ? 'unset' : 'none';
 }
 
 /**
- * @param {String} text - piece of text to capitalize the first letter of
- * @returns {String} Capitalized text
+ * @description triggers the cart pop animation
+ * @returns {void}
  */
-export const capitalize = (text) =>
-  text.replace(/^[a-z]/, (l) => l.toUpperCase());
+export function cartAnimation() {
+  const cartCount = document.querySelector('.cart-count');
+  if (!cartCount) return;
 
-/**
- * @param {String} text - piece of text to capitalize the first letters of each word in
- * @returns {String} Capitalized text
- */
-export const capitalizeAll = (text) =>
-  text.replace(/\b[a-z]/g, (l) => l.toUpperCase());
+  cartCount.classList.remove('cart-pop');
+  void cartCount.offsetWidth;
+  cartCount.classList.add('cart-pop');
+}
+//#endregion cart utils
 
+//#region alert utils
 const alert = new Alert();
 
+/**
+ * @param {String} message - text content of alert
+ * @param {Boolean} scroll - whether to scroll to the top of the page
+ * @param {String} color - text color of alert
+ * @param {String} bgColor - background of alert
+ */
 export function alertMessage(
   message,
   scroll = true,
@@ -199,37 +185,22 @@ export function alertMessage(
   if (scroll) scrollTo(0, 0);
 }
 
+/**
+ * @param {Object[]} alerts - array of alerts
+ * @param {String} alerts[].message - text content of alert
+ * @param {String} alerts[].color - text color of alert
+ * @param {String} alerts[].bgColor - background of alert
+ * @param {Boolean} scroll - whether to scroll to the top of the page
+ */
 export function alertMessages(alerts, scroll = true) {
   alert.renderAlerts(alerts);
   if (scroll) scrollTo(0, 0);
 }
 
+/**
+ * @description clears all alerts from current page
+ * @returns {void}
+ */
 export const clearAlerts = () =>
   document.querySelectorAll('.alert').forEach((a) => a.remove());
-
-export function cartAnimation() {
-  const cartCount = document.querySelector('.cart-count');
-  if (!cartCount) return;
-
-  cartCount.classList.remove('cart-pop');
-  void cartCount.offsetWidth;
-  cartCount.classList.add('cart-pop');
-}
-
-export function updateTheCartNum() {
-  const cartItems = getLocalStorage('so-cart') || [];
-  const cartCountEl = document.querySelector('.cart-count');
-  if (!cartCountEl) return;
-
-  const count = cartItems.length;
-  cartCountEl.textContent = count;
-
-  if (count === 0) {
-    cartCountEl.style.display = 'none';
-  } else {
-    cartCountEl.style.display = 'inline-block';
-  }
-}
-cartCount.textContent = itemCount;
-cartCount.style.display = itemCount ? 'unset' : 'none';
-}
+//#endregion alert utils
