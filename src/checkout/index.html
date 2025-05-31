@@ -75,19 +75,21 @@
           <section class="divider">
             <label for="cardNumber">Credit card #</label>
             <input
-              type="credit"
+              type="text"
               id="cardNumber"
               name="cardNumber"
               required
               placeholder="1111-2222-3333-4444"
+              inputmode="numeric"
             />
             <label for="expiration">Exp. date</label>
             <input
-              type="month"
+              type="text"
               id="expiration"
               name="expiration"
               required
-              placeholder="1/23"
+              placeholder="01/23"
+              pattern="\d{2}/\d{2}"
             />
             <label for="code">Security code</label>
             <input
@@ -97,6 +99,8 @@
               required
               pattern="\d{3}"
               placeholder="000"
+              min="000"
+              max="999"
             />
           </section>
 

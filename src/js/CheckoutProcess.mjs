@@ -64,10 +64,15 @@ export default class CheckoutProcess {
   }
 
   async checkout() {
+    this.getShipping();
+    this.getTotal();
+
     const formData = new FormData(document.forms['checkout']);
 
     const order = {};
     formData.forEach((value, key) => (order[key] = value));
+
+    order.cardNumber = order.cardNumber.replace(/[^0-9]/g, '');
 
     order.orderDate = new Date().toISOString();
     order.orderTotal = this.orderTotal;
