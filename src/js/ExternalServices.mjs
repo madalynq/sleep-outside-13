@@ -1,3 +1,5 @@
+const baseURL = import.meta.env.VITE_SERVER_URL;
+
 /**
  * @description retrieves JSON from given fetch response; throws error if request failed
  * @param {Response} res - response from Fetch request
@@ -10,9 +12,7 @@ async function convertToJson(res) {
 }
 
 export default class ExternalServices {
-  constructor(baseURL) {
-    this.baseURL = import.meta.env.VITE_SERVER_URL || '';
-  }
+  constructor() {}
 
   /**
    * @param {String} category - path fragment used in search
@@ -20,7 +20,7 @@ export default class ExternalServices {
    * @description Uses `baseURL` and `category` to build a fetch request for items from the SleepOutside backend API
    */
   async getData(category) {
-    const res = await fetch(`${this.baseURL}products/search/${category}`);
+    const res = await fetch(`${baseURL}products/search/${category}`);
     const data = await convertToJson(res);
     return data.Result;
   }
@@ -30,16 +30,21 @@ export default class ExternalServices {
    * @returns {Object} found product data with given ID
    */
   async findProductById(id) {
-    return (await convertToJson(await fetch(`${this.baseURL}product/${id}`)))
-      .Result;
+    return (await convertToJson(await fetch(`${baseURL}product/${id}`))).Result;
   }
 
-  async checkout(order) {
-    const response = await fetch(this.baseURL + 'checkout/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(order),
-    });
-    return await convertToJson(response); // return parsed result or throw error
+  /**
+   * @description submits order to API
+   * @param {Object} data - order contents
+   * @returns {Object} json object of responce
+   */
+  async checkout(data) {
+    return await convertToJson(
+      await fetch(`${baseURL}checkout/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }),
+    );
   }
 }

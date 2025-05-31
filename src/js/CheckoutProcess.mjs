@@ -1,9 +1,6 @@
 import ExternalServices from './ExternalServices.mjs';
-import { alertMessage } from './utils.mjs';
-
-const externalServices = new ExternalServices(
-  import.meta.env.VITE_SERVER_URL || '',
-);
+import { setLocalStorage, alertMessage, clearAlerts } from './utils.mjs';
+const externalServices = new ExternalServices();
 
 const packageItems = (items) =>
   items.map((item) => ({
@@ -14,6 +11,12 @@ const packageItems = (items) =>
   }));
 
 export default class CheckoutProcess {
+  itemTotal = 0;
+  subtotal = 0;
+  tax = 0;
+  shipping = 0;
+  orderTotal = 0;
+
   constructor(cart, outputSelector) {
     this.cart = cart;
 
@@ -30,11 +33,14 @@ export default class CheckoutProcess {
   }
 
   getItemCount = () => (this.itemTotal = this.cart.length);
+
   getSubtotal = () =>
     (this.subtotal = this.cart
       .map((item) => item.FinalPrice)
       .reduce((sum, item) => sum + item, 0));
+
   getTax = () => (this.tax = this.subtotal * 0.06);
+
   getShipping = () => (this.shipping = this.itemTotal * 2 + 8);
 
   getTotal() {
@@ -44,11 +50,11 @@ export default class CheckoutProcess {
       parseFloat(this.shipping);
   }
 
-  displayTotals(withTax = false) {
+  displayTotals(withShipping = false) {
     this.itemCountEl.textContent = this.itemTotal;
     this.taxEl.textContent = `$${this.tax.toFixed(2)}`;
     this.subtotalEl.textContent = `$${this.subtotal.toFixed(2)}`;
-    if (withTax) {
+    if (withShipping) {
       this.shippingEl.textContent = `$${this.shipping.toFixed(2)}`;
       this.orderTotalEl.textContent = `$${this.orderTotal.toFixed(2)}`;
     }
@@ -60,10 +66,10 @@ export default class CheckoutProcess {
     this.displayTotals(true);
   }
 
+  /**
+   *
+   */
   async checkout() {
-    this.getShipping();
-    this.getTotal();
-
     const formData = new FormData(document.forms['checkout']);
 
     const order = {};
@@ -78,21 +84,17 @@ export default class CheckoutProcess {
     order.items = packageItems(this.cart);
 
     try {
+      const res = await externalServices.checkout(order);
       // Using window['console] as ESLint does not like console
-      const result = await externalServices.checkout(order);
+      window['console'].log(res);
+      setLocalStorage('so-cart', []);
+      window.location.href = './success.html';
+    } catch (e) {
+      window['console'].error(e);
+      clearAlerts();
 
-      localStorage.clear();
-      window.location.href = 'success.html';
-    } catch (err) {
-      console.log('Full error:', err);
-      if (err.name === 'servicesError' && typeof err.message === 'object') {
-        for (const key in err.message) {
-          alertMessage(`${key}: ${err.message[key]}`);
-        }
-      } else {
-        alert('Unknown error occured. Please try again.');
-        console.error(err);
-      }
+      for (const message in e.message)
+        alertMessage(e.message[message], true, '#000', '#f707');
     }
   }
 }
