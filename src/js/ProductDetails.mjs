@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from './utils.mjs';
+import { getLocalStorage, setLocalStorage, updateCartCount } from './utils.mjs';
 
 /**
  * @param {Object} product - product object
@@ -54,12 +54,27 @@ export default class ProductDetails {
   }
 
   /**
-   * @description retrieves cart from localStorage, adds relevant product to it, then returns it to localStorage
+   * @description retrieves cart from localStorage and checks if the given item is already present. If yes: add 1 to item quantity; else: set quantity to 1 and add it to cart; finally: returns cart to localStorage
+   *
    */
   addToCart() {
     const cartItems = getLocalStorage('so-cart') || [];
-    cartItems.push(this.product);
+    let inCart = false;
+
+    for (const item of cartItems)
+      if (item.Id === this.productId) {
+        if (!item.Quantity) item.Quantity = 1;
+        item.Quantity++;
+        inCart = true;
+      }
+
+    if (!inCart) {
+      this.product.Quantity = 1;
+      cartItems.push(this.product);
+    }
+
     setLocalStorage('so-cart', cartItems);
+    updateCartCount();
   }
 
   /**

@@ -1,3 +1,4 @@
+/* #region generic */
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -43,7 +44,9 @@ header {
 p {
   padding: 0.75rem;
 }
+/* #endregion generic */
 
+/* #region logo */
 .logo {
   line-height: 60px;
   width: 245px;
@@ -97,8 +100,9 @@ p {
 .logo--square > div {
   margin-top: -1.7em;
 }
+/* #endregion logo */
 
-/* utility classes */
+/* #region utility classes */
 .highlight {
   color: var(--tertiary-color);
 }
@@ -122,9 +126,9 @@ button {
   text-align: center;
 }
 
-/* End utility classes */
+/* #endregion utility classes */
 
-/* Cart icon styles */
+/* #region Cart icon styles */
 .cart {
   padding-top: 1em;
   position: relative;
@@ -158,8 +162,9 @@ button {
   line-height: 1;
 }
 
-/* End cart icon styles */
+/* #endregion cart icon styles */
 
+/* #region mission */
 .mission {
   position: absolute;
   top: 1rem;
@@ -177,12 +182,15 @@ button {
   width: 50%;
   text-align: center;
 }
+/* #endregion mission */
 
+/* #region products */
 .products {
   margin-top: 2rem;
   padding: 1rem;
 }
 
+/* #region product lists */
 .product-list {
   display: flex;
   flex-flow: row wrap;
@@ -190,12 +198,18 @@ button {
   justify-content: center;
 }
 
+.cart-list {
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+}
+
 .product-list a {
   text-decoration: none;
   color: var(--dark-grey);
 }
+/* #endregion product lists */
 
-/* Styles for product lists */
+/* #region product card */
 .product-card {
   flex: 1 1 45%;
   margin: 0.25em;
@@ -218,8 +232,6 @@ button {
   font-size: 1em;
 }
 
-/* End product list card */
-
 .product-detail {
   padding: 1em;
   max-width: 500px;
@@ -229,11 +241,14 @@ button {
 .product-detail img {
   width: 100%;
 }
+/* #endregion product card */
 
-/* Start cart list card styles */
+/* #region cart list card */
 .cart-card {
+  grid-column: 1/4;
   display: grid;
-  grid-template-columns: 25% auto 15%;
+  grid-template-columns: 25% auto 25%;
+  grid-template-columns: subgrid;
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
@@ -263,13 +278,44 @@ button {
 }
 
 .cart-card__quantity {
+  align-items: center;
+  display: flex;
+  gap: 2px;
   grid-row: 1;
   grid-column: 3;
+  margin-right: 16px;
+}
+
+.cart-card__quantity button {
+  aspect-ratio: 1.618;
+  background: none;
+  border: 0.125em solid var(--secondary-color);
+  border-radius: 0.125em;
+  color: #000;
+  font-size: 99%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 1.5rem;
+}
+
+.cart-card__quantity span {
+  font-family: monospace, monospace;
+  font-weight: bold;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -55%);
+}
+
+.cart-card__quantity button:hover {
+  outline: 0.125em solid var(--secondary-color);
 }
 
 .cart-card__price {
   grid-row: 2;
   grid-column: 3;
+  margin-right: 16px;
 }
 
 .cart-card__remove {
@@ -292,14 +338,16 @@ button {
 }
 
 .cart-total {
+  display: none;
   margin-top: 0.2em;
   font-size: 1.17em;
   font-weight: 700;
   text-align: right;
   width: 96%;
 }
+/* #endregion cart list card */
 
-/* if product is on sale */
+/* #region if product is on sale */
 .discount {
   text-decoration: line-through;
   opacity: 0.8;
@@ -319,8 +367,11 @@ button {
   padding: 2px 6px;
   border-radius: 4px;
 }
+/* #endregion if product is on sale */
 
-/* start alert list */
+/* #endregion products */
+
+/* #region alert list */
 .alert-list p {
   background-color: var(--tertiary-color);
   color: #fff;
@@ -348,9 +399,9 @@ button {
   box-shadow: 0 0 0.2em currentColor;
 }
 
-/* end alert list */
+/* #endregion alert list */
 
-/* start checkout */
+/* #region checkout */
 
 .checkout {
   align-items: center;
@@ -427,7 +478,7 @@ button {
   background-color: var(--light-grey);
 }
 
-/* end checkout */
+/* #endregion checkout */
 
 @media screen and (min-width: 500px) {
   body {
@@ -439,9 +490,13 @@ button {
     font-size: 1.2em;
   }
 
+  .cart-list {
+    grid-template-columns: 150px 1fr auto;
+  }
   .cart-card {
     font-size: inherit;
-    grid-template-columns: 150px auto 15%;
+    grid-template-columns: 150px 1fr 20%;
+    grid-template-columns: subgrid;
   }
 }
 

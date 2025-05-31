@@ -1,3 +1,5 @@
+//#region basic utils
+
 /**
  * @description wrapper for querySelector...returns matching element
  * @param {String} selector - CSS selector to query
@@ -58,6 +60,23 @@ export function getParam(param) {
 // export const getParam = param => new URLSearchParams(window.location.search).get(param);
 
 /**
+ * @param {String} text - piece of text to capitalize the first letter of
+ * @returns {String} Capitalized text
+ */
+export const capitalize = (text) =>
+  text.replace(/^[a-z]/, (l) => l.toUpperCase());
+
+/**
+ * @param {String} text - piece of text to capitalize the first letters of each word in
+ * @returns {String} Capitalized text
+ */
+export const capitalizeAll = (text) =>
+  text.replace(/\b[a-z]/g, (l) => l.toUpperCase());
+
+//#endregionbasic utils
+
+//#region template utils
+/**
  * @param {Function} templateFn - function to map list items with
  * @param {Element} parentElement HTML element to parent list items to
  * @param {Array} list - items to list
@@ -112,55 +131,20 @@ export async function loadHeaderFooter() {
   updateCartCount();
 }
 
+//#endregiontemplate utils
+
 // Moved to utils as importing from cart caused the header to be loaded twice
 /**
  * @description gets the count of items in a users cart and displays it by the cart icon. hidden if cart is empty
  */
-function updateCartCount() {
+export function updateCartCount() {
   const cartItems = getLocalStorage('so-cart') || [];
-  const itemCount = cartItems.length; // Or sum quantity if quantity varies
-
+  const itemCount = cartItems.reduce(
+    (prev, curr) => prev + (curr.Quantity || 1),
+    0,
+  );
   const cartCount = document.querySelector('.cart-count');
 
-  if (itemCount > 0) {
-    cartCount.textContent = itemCount;
-    cartCount.style.display = 'inline-block';
-  } else {
-    cartCount.style.display = 'none';
-  }
+  cartCount.textContent = itemCount;
+  cartCount.style.display = itemCount ? 'unset' : 'none';
 }
-
-export function updateCartTotal() {
-  const cartItems = getLocalStorage('so-cart') || [];
-  const cartTotal = document.querySelector('.cart-total'); // reference html element
-  let runningTotal = 0; // create variable to hold running total
-
-  // loop through cart items and add FinalPrice to running total
-  for (let i = 0; i < cartItems.length; i++) {
-    runningTotal += cartItems[i].FinalPrice; //add price of item to running total
-  }
-
-  const total = runningTotal.toFixed(2); // create variable to display total to the hundredths
-  cartTotal.textContent = `Cart Total: $ ${total}`; // display total of cart on page
-
-  // display if items in cart
-  if (cartItems.length > 0) {
-    cartTotal.style.display = 'inline-block';
-  } else {
-    cartTotal.style.display = 'none';
-  }
-}
-
-/**
- * @param {String} text - piece of text to capitalize the first letter of
- * @returns {String} Capitalized text
- */
-export const capitalize = (text) =>
-  text.replace(/^[a-z]/, (l) => l.toUpperCase());
-
-/**
- * @param {String} text - piece of text to capitalize the first letters of each word in
- * @returns {String} Capitalized text
- */
-export const capitalizeAll = (text) =>
-  text.replace(/\b[a-z]/g, (l) => l.toUpperCase());
