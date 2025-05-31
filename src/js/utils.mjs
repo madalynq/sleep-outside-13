@@ -184,28 +184,6 @@ export function alertMessages(alerts, scroll = true) {
 export const clearAlerts = () =>
   document.querySelectorAll('.alert').forEach((a) => a.remove());
 
-export function alertMessage(message, scroll = true) {
-  const main = document.querySelector('main');
-
-  // Create alert container
-  const alert = document.createElement('div');
-  alert.classList.add('alert');
-  alert.innerHTML = `
-    <span>${message}</span>
-    <button class="close" aria-label="Close alert">&times;</button>
-  `;
-
-  // Add close button event
-  alert.querySelector('.close').addEventListener('click', () => {
-    alert.remove();
-  });
-
-  // Add alert to top of main
-  main.prepend(alert);
-
-  if (scroll) window.scrollTo(0, 0);
-}
-
 export function cartAnimation() {
   const cartCount = document.querySelector('.cart-count');
   if (!cartCount) return;
