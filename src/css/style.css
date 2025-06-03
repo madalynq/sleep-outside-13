@@ -570,3 +570,89 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
+.newsletter {
+  margin: 10px;
+  width: 100%;
+  border: 1px solid var(--light-grey);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.newsletter-about,
+.newsletter-form {
+    padding: 10px;
+    width: 100%
+}
+
+.newsletter h3 {
+  padding-bottom: 20px;
+}
+
+.newsletter fieldset {
+    border: none;
+    padding: .5rem 2%;
+}
+
+.newsletter label {
+    display: block;
+    padding: .25rem;
+    font-size: .9rem;
+    font-weight: 700;
+}
+
+.newsletter input[type="text"],
+.newsletter input[type="email"]
+{
+    background-color: #eee;
+    display: block;
+    border: solid 1px #000;
+    border-radius: 6px;
+    padding: .5rem;
+    color: #555;
+    width: 100%;
+    max-width: 400px;
+}
+
+.register input[type="submit"] {
+    width: 100%;
+    max-width: 400px;
+    padding: .5rem;
+    margin: .25rem 3% .25rem 3%;
+    color: #fff;
+    border: #fff solid 2px;
+    border-radius: 10px;
+    background-color: #525b0f;
+    /* For browsers that do not support gradients */
+    box-shadow: 1px 1px 4px #999;
+    font-family: var(--font-body);
+    font-size: var(--font-base);
+    font-weight: 700;
+}
+
+input:invalid:required {
+  background-color: #f0a868;
+  background-image: linear-gradient(to right, #fff, #f0a868);
+}
+
+input:valid:required {
+  border: 2px solid blue;
+}
+
+.thank-you h2 {
+  font-size: 1.17rem;
+  padding: 10px 0 10px 0;
+}
+
+.thank-you a {
+  text-decoration: none;
+  color: #8a470c;
+  padding-top: 5rem;
+}
+
+.thank-you a:visited {
+  text-decoration: none;
+  color: #8a470c;
+}
