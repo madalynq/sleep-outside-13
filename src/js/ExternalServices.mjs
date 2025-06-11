@@ -48,3 +48,4 @@ export default class ExternalServices {
     );
   }
 }
+console.log('Base URL:', baseURL);
