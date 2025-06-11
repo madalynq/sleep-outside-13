@@ -4,10 +4,17 @@ import ProductList from './ProductList.mjs';
 
 loadHeaderFooter();
 
+const category = getParam('category') || 'tents'; // fallback
+console.log('Category from URL:', getParam('category'));
+console.log('Resolved category:', category);
+
 const productList = new ProductList(
-  getParam('category'),
+  category,
   new ExternalServices(),
-  document.querySelector('.product-list'),
+  document.querySelector('.product-list')
 );
 
 productList.init();
+
+console.log('Category from URL:', getParam('category'));
+console.log('Resolved category:', category);

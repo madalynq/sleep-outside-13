@@ -29,7 +29,9 @@ const productCardTemplate = ({
         ? `
     <p>
       <span class="discount">$${SuggestedRetailPrice.toFixed(2)}</span>
-      <span class="percent">${Math.round(((SuggestedRetailPrice - FinalPrice) / SuggestedRetailPrice) * 100)}% off</span>
+      <span class="percent">${Math.round(
+        ((SuggestedRetailPrice - FinalPrice) / SuggestedRetailPrice) * 100
+      )}% off</span>
     </p>`
         : ''
     }
@@ -37,44 +39,56 @@ const productCardTemplate = ({
 </li>`;
 
 export default class ProductList {
-  /**
-   * @param {String} category - category of the products
-   * @param {ExternalServices} dataSource - ExternalServices class holding relevant data
-   * @param {Element} listElement - HTML element to parent list items to
-   */
   constructor(category, dataSource, listElement) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.sortSelect = document.getElementById('sort-options');
+    this.products = [];
   }
 
-  /**
-   * @description retrieves products to render as a list from the dataSource, then calls this.renderList
-   */
   async init() {
-    const list = await this.dataSource.getData(this.category);
+    this.products = await this.dataSource.getData(this.category);
     const categoryCapitalized = capitalizeAll(
-      this.category.split('-').join(' '),
+      this.category.split('-').join(' ')
     );
-    document.getElementById('product-category').textContent =
-      categoryCapitalized;
-    document.title = document.title.replace(
-      '{{product-category}}',
-      categoryCapitalized,
-    );
-    this.renderList(list);
+    document.getElementById('product-category').textContent = categoryCapitalized;
+    document.title = document.title.replace('{{product-category}}', categoryCapitalized);
+
+    // Initial render
+    this.renderList(this.products);
+
+    // Add listener for sort changes
+    if (this.sortSelect) {
+      this.sortSelect.addEventListener('change', () => {
+        const sorted = this.getSortedProducts(this.sortSelect.value);
+        this.renderList(sorted);
+      });
+    }
   }
 
-  /**
-   * @param {Array} list - items used in list
-   */
+  getSortedProducts(sortType) {
+    const sorted = [...this.products];
+    switch (sortType) {
+      case 'price-asc':
+        sorted.sort((a, b) => a.FinalPrice - b.FinalPrice);
+        break;
+      case 'price-desc':
+        sorted.sort((a, b) => b.FinalPrice - a.FinalPrice);
+        break;
+      case 'name-asc':
+        sorted.sort((a, b) => a.NameWithoutBrand.localeCompare(b.NameWithoutBrand));
+        break;
+      case 'name-desc':
+        sorted.sort((a, b) => b.NameWithoutBrand.localeCompare(a.NameWithoutBrand));
+        break;
+      default:
+        return this.products;
+    }
+    return sorted;
+  }
+
   renderList(list) {
-    renderListWithTemplate(
-      productCardTemplate,
-      this.listElement,
-      list,
-      'afterbegin',
-      true,
-    );
+    renderListWithTemplate(productCardTemplate, this.listElement, list, 'afterbegin', true);
   }
 }
